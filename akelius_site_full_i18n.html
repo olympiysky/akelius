@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Akelius — прототип</title>
+  <style>
+    :root { --brand:#0a6cff; --text:#16181a; --bg:#ffffff; --line:#e6eaef; --topbar-h:0px; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background:var(--bg); padding-top:var(--topbar-h); }
+
+    /* NAVBAR */
+    header.topbar { position: fixed; top:0; left:0; right:0; z-index:1000; background:#fff; border-bottom:1px solid var(--line); }
+    .bar { max-width:1200px; margin:0 auto; padding:8px 16px; display:flex; align-items:center; gap:16px; }
+    .brand { font-weight:700; color:var(--brand); white-space:nowrap; }
+
+    nav.main-menu { display:flex; align-items:center; gap:14px; flex:1; }
+    nav.main-menu a { color:#0b1320; text-decoration:none; padding:6px 8px; border-radius:6px; font-size:14px; }
+    nav.main-menu a:hover { background:#f6f8fa; }
+
+    .lang-menu { margin-left:auto; display:flex; align-items:center; gap:6px; white-space:nowrap; }
+    .lang-menu button { border:1px solid #d0d7de; background:#fff; color:#111; padding:6px 10px; border-radius:8px; font-size:13px; line-height:1; cursor:pointer; }
+    .lang-menu button.active { border-color: var(--brand); color: var(--brand); font-weight:600; }
+    .lang-menu button:hover { background:#f6f8fa; }
+
+    /* CONTENT */
+    main { max-width:1200px; margin:0 auto; padding:8px 16px 56px; }
+    .tagline { color:#475467; margin:8px 0 12px; }
+    h1,h2,h3,h4 { margin:0.6em 0 0.4em; }
+    p { margin:0.6em 0; }
+
+    .stats { display:grid; grid-template-columns: repeat(6, auto); gap:8px 16px; align-items:baseline; margin:16px 0; }
+    .stats .num { font-weight:700; font-size:20px; }
+    .stats .lbl { color:#475467; }
+
+    .resources, .team, .support { margin-top:24px; }
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; }
+    .card { border:1px solid #edf0f3; border-radius:10px; padding:12px; }
+    .muted { color:#667085; }
+
+    .footer { margin-top:32px; padding-top:16px; border-top:1px solid #edf0f3; color:#667085; font-size:14px; }
+
+    @media (max-width:760px){
+      .bar { flex-wrap:wrap; gap:10px; }
+      .brand { width:100%; }
+      nav.main-menu { width:100%; order:2; flex-wrap:wrap; }
+      .lang-menu { order:3; margin-left:0; }
+      .stats { grid-template-columns: repeat(3, auto); }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <div class="bar">
+      <div class="brand" data-i18n="brand">Akelius Казахстан</div>
+
+      <nav class="main-menu" aria-label="Главное меню">
+        <a href="#home" data-i18n="menu.home">Главная</a>
+        <a href="#about" data-i18n="menu.about">О проекте</a>
+        <a href="#results" data-i18n="menu.achievements">Достижения</a>
+        <a href="#resources" data-i18n="menu.resources">Ресурсы</a>
+        <a href="#team" data-i18n="menu.team">Команда</a>
+        <a href="#support" data-i18n="menu.support">Поддержка</a>
+        <a href="#contacts" data-i18n="menu.contacts">Контакты</a>
+      </nav>
+
+      <div class="lang-menu" aria-label="Выбор языка">
+        <button type="button" data-lang="ru" class="active">RU</button>
+        <button type="button" data-lang="kk">KZ</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <p class="tagline" data-i18n="tagline">Языковое образование для школ</p>
+
+    <section id="about">
+      <h2 data-i18n="hero_title">Akelius в Казахстане — современное языковое образование</h2>
+      <p data-i18n="hero_sub">Материалы, Teacher Hub и поддержка внедрения по регионам.</p>
+
+      <div class="stats">
+        <div class="num">1900+</div>
+        <div class="lbl" data-i18n="stats.resources">ресурсов</div>
+        <div class="num">27</div>
+        <div class="lbl" data-i18n="stats.schools">школ</div>
+        <div class="num">98</div>
+        <div class="lbl" data-i18n="stats.teachers">учителей</div>
+      </div>
+
+      <h4 data-i18n="geography">География проекта</h4>
+      <p data-i18n="cities">Астана, Алматы, Шымкент, Семей, Актау</p>
+      <p class="muted" data-i18n="map_placeholder">[карта placeholder]</p>
+    </section>
+
+    <section class="resources" id="resources">
+      <h3 data-i18n="resources_sec">Ресурсы</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div>PDF • A1</div>
+          <strong>Present Simple Worksheets</strong>
+        </div>
+        <div class="card">
+          <div>Видео • A2</div>
+          <strong>Interactive Story</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="team" id="team">
+      <h3 data-i18n="team_sec">Наша команда</h3>
+      <p data-i18n="team_desc">Специалисты, которые развивают проект Akelius в Казахстане.</p>
+      <div class="card-grid">
+        <div class="card"><div class="muted">Фото</div><strong>Имя Фамилия 1</strong><div data-i18n="roles.pm">Руководитель проекта</div></div>
+        <div class="card"><div class="muted">Фото</div><strong>Имя Фамилия 2</strong><div data-i18n="roles.method">Методист</div></div>
+        <div class="card"><div class="muted">Фото</div><strong>Имя Фамилия 3</strong><div data-i18n="roles.trainer">Тренер</div></div>
+        <div class="card"><div class="muted">Фото</div><strong>Имя Фамилия 4</strong><div data-i18n="roles.coord">Координатор</div></div>
+        <div class="card"><div class="muted">Фото</div><strong>Имя Фамилия 5</strong><div data-i18n="roles.support">Техническая поддержка</div></div>
+      </div>
+    </section>
+
+    <section class="support" id="support">
+      <h3 data-i18n="support_sec">Поддержка</h3>
+      <p><a href="mailto:support@akelius.kz">support@akelius.kz</a></p>
+    </section>
+
+    <footer class="footer">
+      <div data-i18n="quick_links">Быстрые ссылки</div>
+      <div data-i18n="subscribe">Подписка</div>
+    </footer>
+  </main>
+
+  <script>
+    // Full i18n dictionary for RU / KK / EN
+    const I18N = {
+      ru: {
+        brand:'Akelius Казахстан', tagline:'Языковое образование для школ',
+        menu:{home:'Главная', about:'О проекте', achievements:'Достижения', resources:'Ресурсы', team:'Команда', support:'Поддержка', contacts:'Контакты'},
+        hero_title:'Akelius в Казахстане — современное языковое образование',
+        hero_sub:'Материалы, Teacher Hub и поддержка внедрения по регионам.',
+        stats:{resources:'ресурсов', schools:'школ', teachers:'учителей'},
+        geography:'География проекта', cities:'Астана, Алматы, Шымкент, Семей, Актау', map_placeholder:'[карта placeholder]',
+        resources_sec:'Ресурсы', team_sec:'Наша команда', team_desc:'Специалисты, которые развивают проект Akelius в Казахстане.',
+        roles:{ pm:'Руководитель проекта', method:'Методист', trainer:'Тренер', coord:'Координатор', support:'Техническая поддержка' },
+        support_sec:'Поддержка', quick_links:'Быстрые ссылки', subscribe:'Подписка'
+      },
+      kk: {
+        brand:'Akelius Қазақстан', tagline:'Мектептер үшін тілдік білім',
+        menu:{home:'Басты бет', about:'Жоба туралы', achievements:'Жетістіктер', resources:'Ресурстар', team:'Команда', support:'Қолдау', contacts:'Байланыс'},
+        hero_title:'Akelius Қазақстанда — заманауи тілдік білім беру',
+        hero_sub:'Материалдар, Teacher Hub және өңірлер бойынша енгізуді қолдау.',
+        stats:{resources:'ресурс', schools:'мектеп', teachers:'мұғалім'},
+        geography:'Жобаның географиясы', cities:'Астана, Алматы, Шымкент, Семей, Ақтау', map_placeholder:'[карта орны]',
+        resources_sec:'Ресурстар', team_sec:'Біздің команда', team_desc:'Akelius жобасын Қазақстанда дамытып жүрген мамандар.',
+        roles:{ pm:'Жоба жетекшісі', method:'Әдіскер', trainer:'Бапкер', coord:'Координатор', support:'Техникалық қолдау' },
+        support_sec:'Қолдау', quick_links:'Жылдам сілтемелер', subscribe:'Жазылу'
+      },
+      en: {
+        brand:'Akelius Kazakhstan', tagline:'Language education for schools',
+        menu:{home:'Home', about:'About', achievements:'Achievements', resources:'Resources', team:'Team', support:'Support', contacts:'Contacts'},
+        hero_title:'Akelius in Kazakhstan — modern language education',
+        hero_sub:'Resources, Teacher Hub and implementation support across regions.',
+        stats:{resources:'resources', schools:'schools', teachers:'teachers'},
+        geography:'Project geography', cities:'Astana, Almaty, Shymkent, Semey, Aktau', map_placeholder:'[map placeholder]',
+        resources_sec:'Resources', team_sec:'Our team', team_desc:'Specialists developing the Akelius project in Kazakhstan.',
+        roles:{ pm:'Project Lead', method:'Methodologist', trainer:'Trainer', coord:'Coordinator', support:'Technical Support' },
+        support_sec:'Support', quick_links:'Quick links', subscribe:'Subscribe'
+      }
+    };
+
+    const langMenu = document.querySelector('.lang-menu');
+    const langButtons = Array.from(langMenu.querySelectorAll('button'));
+
+    function applyI18n(code){
+      const t = I18N[code] || I18N.ru;
+      document.documentElement.lang = (code === 'kk') ? 'kk' : code;
+
+      // Brand
+      const brand = document.querySelector('[data-i18n="brand"]');
+      if (brand) brand.textContent = t.brand;
+
+      // Menu
+      document.querySelectorAll('[data-i18n^="menu."]').forEach(el => {
+        const key = el.getAttribute('data-i18n').split('.')[1];
+        if (t.menu[key]) el.textContent = t.menu[key];
+      });
+
+      // Simple keys
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (key.startsWith('menu.')) return; // already handled
+        const path = key.split('.');
+        let val = t;
+        for (const p of path) { if (val && typeof val === 'object') val = val[p]; }
+        if (typeof val === 'string') el.textContent = val;
+      });
+    }
+
+    function setLang(code){
+      langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === code));
+      localStorage.setItem('site_lang', code);
+      applyI18n(code);
+      // Recompute top offset in case brand/menu wraps differently per language
+      adjustOffset();
+    }
+
+    langMenu.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      setLang(btn.dataset.lang);
+    });
+
+    // Fixed header offset
+    const topbar = document.querySelector('header.topbar');
+    function adjustOffset(){
+      const h = topbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--topbar-h', h + 'px');
+    }
+    window.addEventListener('load', adjustOffset);
+    window.addEventListener('resize', adjustOffset);
+
+    // Init
+    const saved = localStorage.getItem('site_lang') || 'ru';
+    setLang(saved);
+  </script>
+</body>
+</html>

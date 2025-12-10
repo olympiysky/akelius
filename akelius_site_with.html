@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Akelius Казахстан— Языковое образование для школ</title>
+  <style>
+    :root { --brand:#0052d4; --text:#1b1f23; --bg:#ffffff; --line:#e0e8f5; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background:var(--bg); }
+
+    /* Фиксированная панель сверху */
+    header.topbar { position: sticky; top: 0; z-index: 1000; background:#fff; border-bottom:1px solid var(--line); }
+    .bar { max-width:var(--maxw); margin:0 auto; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:nowrap; }
+    .brand { font-weight:600; color:var(--brand); letter-spacing:.2px; white-space:nowrap; }
+
+    /* Языковой переключатель закреплён справа, не переносится */
+    .lang { margin-left:auto; display:flex; align-items:center; gap:6px; white-space:nowrap; }
+    .lang button { border:1px solid #d0d7de; background:#fff; color:#111; padding:6px 10px; border-radius:8px; font-size:14px; line-height:1; cursor:pointer; }
+    .lang button.active { border-color: var(--brand); color: var(--brand); font-weight:600; }
+    .lang button:hover { background:#f6f8fa; }
+
+    main { max-width:var(--maxw); margin:0 auto; padding:0 26px 0; }
+    html { scroll-padding-top: 70px; scroll-behavior: smooth; }
+    #home { scroll-margin-top: 70px; }
+
+    /* Сброс возможных внешних стилей загружаемого контента */
+    .content h1, .content h2, .content h3, .content h4, .content h5, .content p { margin-block-start:0.6em; margin-block-end:0.6em; }
+    .content img { max-width:100%; height:auto; }
+
+    @media (max-width:600px){
+      .lang button{ padding:6px 8px; font-size:13px; }
+      .bar{ padding:8px 12px; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+
+
+<body>
+
+
+  <main>
+    <div class="content"><!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Akelius Казахстан — Языковое образование для школ</title>
+<style>
+:root{
+ --blue:#0052d4;--light-blue:#d6e7ff;--muted:#5a6570;--bg:#f8faff;--card:#fff;
+ --maxw:1250px;--radius:12px;
+ --accent:#ff6b35;--accent-light:#ffe0d6;--purple:#7c3aed;--green:#10b981;--orange:#f59e0b;
+ font-family:Inter,system-ui,Arial;
+}
+body{margin:0;background:linear-gradient(135deg, #f8faff 0%, #e8f0ff 100%);color:#0f1724;line-height:1.5;padding-top:70px}
+.container{max-width:var(--maxw);margin:auto;padding:16px 26px;}
+.card-full-width{background:white;border-radius:12px;padding:20px 26px;box-shadow:0 6px 18px rgba(0,0,0,0.05);margin-top:30px;margin-left:-26px;margin-right:-26px;width:calc(100% + 52px);max-width:none}
+header{background:linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(248,250,255,0.98) 100%);backdrop-filter:blur(10px);border-bottom:2px solid rgba(0,82,212,0.1);box-shadow:0 4px 20px rgba(0,82,212,0.08);position:fixed;top:0;left:0;right:0;z-index:40;width:100%;}
+.header-inner{max-width:var(--maxw);margin:auto;padding:14px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:nowrap;gap:20px;}
+.logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--blue),#0066ff,var(--purple));box-shadow:0 4px 15px rgba(0,82,212,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;flex-shrink:0;transition:all 0.3s}
+.logo:hover{transform:scale(1.05) rotate(5deg);box-shadow:0 6px 20px rgba(0,82,212,0.4)}
+nav{display:flex;gap:16px;flex-shrink:0}
+nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:6px 12px;border-radius:8px;white-space:nowrap;transition:all 0.3s;position:relative}
+nav a:hover{color:var(--blue);background:linear-gradient(135deg, #d0e4ff, #e0edff);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,82,212,0.15)}
+nav a::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width 0.3s}
+nav a:hover::after{width:70%}
+.menu-toggle{display:none;flex-direction:column;gap:4px;background:transparent;border:none;cursor:pointer;padding:8px;z-index:50;outline:none;box-shadow:none}
+.menu-toggle span{width:24px;height:2px;background:var(--muted);transition:all 0.3s;border-radius:2px}
+.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}
+.menu-toggle.active span:nth-child(2){opacity:0}
+.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px)}
+@media (max-width:968px){
+ nav{position:fixed;top:70px;left:0;right:0;background:white;flex-direction:column;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);transform:translateX(-100%);transition:transform 0.3s;z-index:45;max-height:calc(100vh - 70px);overflow-y:auto;visibility:hidden}
+ nav.active{transform:translateX(0);visibility:visible}
+ nav a{padding:12px 16px;border-bottom:1px solid #d0e4ff}
+ .menu-toggle{display:flex}
+ .menu-toggle:focus{outline:none;box-shadow:none}
+ .header-inner{position:relative}
+}
+@media (max-width:768px){
+ nav.lang{margin-left:0;margin-top:12px}
+}
+nav.lang{margin-left:24px;display:flex;gap:12px;flex-shrink:0;align-items:center;font-size:13px}
+nav.lang button{border:1px solid rgba(0,82,212,0.2);background:transparent;color:var(--muted);padding:4px 10px;border-radius:6px;font-size:13px;line-height:1;cursor:pointer;white-space:nowrap;text-decoration:none;font-weight:400;transition:all 0.3s}
+nav.lang button.active{color:var(--blue);font-weight:400;border-color:var(--blue)}
+nav.lang button:hover{color:var(--blue);border-color:var(--blue)}
+.btn-login{border:none;background:transparent;color:var(--muted);padding:0;font-size:14px;line-height:1;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+.btn-login:hover{color:var(--blue)}
+.btn{background:var(--blue);color:white;padding:10px 14px;border-radius:10px;text-decoration:none;font-size:14px}
+.hero{background:var(--light-blue);padding:40px;border-radius:14px;margin:10px 0 20px 0;display:flex;flex-direction:column;gap:20px}
+.hero-block{background:linear-gradient(135deg, #d6e7ff 0%, #e0edff 50%, #cce0ff 100%);padding:40px;border-radius:14px;margin-bottom:20px;margin-left:-26px;margin-right:-26px;width:calc(100% + 52px);max-width:none;box-shadow:0 8px 30px rgba(0,82,212,0.12);border:1px solid rgba(0,82,212,0.1)}
+.hero-block:first-of-type{margin-top:0}
+.geography-block{background:linear-gradient(135deg,white 0%,#fafbff 100%);padding:24px;border-radius:12px;box-shadow:0 8px 25px rgba(0,82,212,0.1);border:2px solid var(--light-blue);width:100%}
+.hero-content{display:flex;gap:40px;align-items:center;min-height:400px}
+.hero-text{flex:0 0 40%}
+.hero-image{flex:0 0 60%;background:#e5e7eb;border-radius:12px;min-height:350px;position:relative;overflow:hidden}
+.image-slider{width:100%;height:350px;position:relative}
+.slide{display:none;width:100%;height:350px;border-radius:12px;position:absolute;top:0;left:0}
+.slide.active{display:flex}
+.slider-controls{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;pointer-events:none}
+.slider-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);border:1px solid white;cursor:pointer;transition:all 0.3s;pointer-events:auto}
+.slider-dot.active{background:white}
+.slider-arrow{position:absolute;bottom:8px;background:rgba(255,255,255,0.8);border:none;width:40px;height:40px;border-radius:4px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;z-index:10;transition:all 0.3s}
+.slider-arrow:hover{background:rgba(255,255,255,1)}
+.slider-arrow.prev{left:16px}
+.slider-arrow.next{right:16px}
+.btn-primary{background:linear-gradient(135deg,var(--blue),#0066ff);color:white;padding:12px 24px;border-radius:10px;text-decoration:none;font-size:14px;display:inline-block;margin-right:12px;margin-top:20px;font-weight:500;box-shadow:0 4px 15px rgba(0,82,212,0.3);transition:all 0.3s;border:none}
+.btn-primary:hover{background:linear-gradient(135deg,#003d9e,#0052d4);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,82,212,0.4)}
+.btn-secondary{background:white;color:var(--blue);padding:12px 24px;border-radius:10px;text-decoration:none;font-size:14px;display:inline-block;margin-right:12px;margin-top:20px;border:2px solid var(--blue);font-weight:500;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,82,212,0.1)}
+.btn-secondary:hover{background:linear-gradient(135deg,#d0e4ff,#e0edff);transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,82,212,0.2);border-color:#0066ff}
+.stat{background:white;padding:12px;border-radius:10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.05)}
+.stats-grid{display:flex;gap:20px;margin:30px 0;flex-wrap:wrap}
+.stat-item{flex:1;min-width:120px;text-align:center;padding:20px;border:2px solid rgba(0,82,212,0.2);border-radius:12px;background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(255,255,255,0.7));box-shadow:0 4px 15px rgba(0,82,212,0.1);transition:all 0.3s}
+.stat-item:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,82,212,0.2);border-color:var(--blue);background:linear-gradient(135deg,rgba(255,255,255,1),rgba(240,247,255,0.9))}
+.stat-number{font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;margin-bottom:8px}
+.stat-label{font-size:14px;color:var(--muted);line-height:1.4}
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px}
+.resource{background:white;border-radius:12px;padding:14px;border:1px solid #e5e7eb}
+.card{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:20px;box-shadow:0 8px 25px rgba(0,82,212,0.1);margin-top:30px;margin-left:-26px;margin-right:-26px;width:calc(100% + 52px);max-width:none;border:1px solid rgba(0,82,212,0.08)}
+.small{font-size:13px;color:var(--muted)}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;max-width:var(--maxw);margin:auto;padding:12px}
+footer{background:linear-gradient(135deg,#2d3748 0%,#1a202c 100%);color:#e2e8f0;padding:24px 0;margin-top:60px;border-top:3px solid rgba(0,82,212,0.3)}
+.footer-new-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.footer-block-title{font-weight:700;font-size:18px;margin-bottom:12px;color:#ffffff}
+.footer-block-description{font-size:14px;line-height:1.3;color:#cbd5e0}
+.footer-links-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.footer-link{display:block;color:#cbd5e0;text-decoration:none;font-size:14px;margin-bottom:4px;transition:color 0.3s;line-height:1.3}
+.footer-link:hover{color:#ffffff}
+.footer-contact-info{font-size:14px;line-height:1.2;color:#cbd5e0}
+.footer-contact-info div{margin-bottom:2px}
+.footer-contact-info a{color:#cbd5e0;text-decoration:none;transition:color 0.3s}
+.footer-contact-info a:hover{color:#ffffff}
+.footer-social-icons{display:flex;gap:12px;margin-top:16px}
+.footer-social-icon{width:32px;height:32px;border-radius:6px;background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(0,82,212,0.2));display:flex;align-items:center;justify-content:center;color:#cbd5e0;text-decoration:none;transition:all 0.3s;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.footer-social-icon[aria-label="Instagram"]:hover{background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);color:#ffffff;transform:translateY(-3px) scale(1.15);box-shadow:0 6px 20px rgba(225,48,108,0.5)}
+.footer-social-icon[aria-label="Facebook"]:hover{background:linear-gradient(135deg,#1877f2,#42a5f5);color:#ffffff;transform:translateY(-3px) scale(1.15);box-shadow:0 6px 20px rgba(24,119,242,0.5)}
+.footer-social-icon[aria-label="YouTube"]:hover{background:linear-gradient(135deg,#ff0000,#ff4444);color:#ffffff;transform:translateY(-3px) scale(1.15);box-shadow:0 6px 20px rgba(255,0,0,0.5)}
+@media (max-width:968px){
+ .footer-new-grid{grid-template-columns:1fr;gap:32px}
+ .footer-links-columns{grid-template-columns:1fr}
+}
+.team-card{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:14px;padding:18px;text-align:center;border:2px solid #d0e4ff;
+ transition:all .3s ease;cursor:pointer;box-shadow:0 4px 15px rgba(0,82,212,0.08)}
+.team-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 12px 30px rgba(0,82,212,0.2);border-color:var(--blue);background:linear-gradient(135deg,white,#f0f7ff)}
+.team-photo{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#e5e7eb,#d1d5db);margin:auto;
+ display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:14px;box-shadow:0 4px 15px rgba(0,0,0,0.1);border:3px solid white;transition:all 0.3s}
+.team-card:hover .team-photo{background:linear-gradient(135deg,var(--blue),var(--purple));color:white;transform:scale(1.1);box-shadow:0 6px 20px rgba(0,82,212,0.3)}
+.video-sponsors-block{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:0}
+.video-container{background:white;border-radius:12px;padding:20px;box-shadow:0 6px 14px rgba(0,0,0,0.04);border:1px solid var(--light-blue)}
+.video-wrapper{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000}
+.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%}
+.sponsors-container{background:white;border-radius:12px;padding:20px;box-shadow:0 6px 14px rgba(0,0,0,0.04);border:1px solid var(--light-blue)}
+.sponsors-title{font-weight:700;font-size:18px;margin-bottom:20px;color:#0f1724}
+.sponsors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;align-items:center}
+.sponsor-logo{background:linear-gradient(135deg,#f8f9fa,#ffffff);border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:80px;border:2px solid #e5e7eb;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.sponsor-logo:hover{background:linear-gradient(135deg,#d0e4ff,#e0edff);border-color:var(--blue);transform:translateY(-4px) scale(1.05);box-shadow:0 6px 20px rgba(0,82,212,0.2)}
+.sponsor-logo img{max-width:100%;max-height:60px;object-fit:contain}
+.btn-support{width:100%;background:linear-gradient(135deg,var(--blue),#0066ff);color:white;padding:14px 24px;border-radius:10px;text-decoration:none;font-size:14px;display:block;font-weight:500;border:none;cursor:pointer;transition:all 0.3s;margin-top:20px;text-align:center;box-shadow:0 4px 15px rgba(0,82,212,0.3)}
+.btn-support:hover{background:linear-gradient(135deg,#003d9e,#0052d4);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,82,212,0.4)}
+@media (max-width:768px){
+ .video-sponsors-block{grid-template-columns:1fr}
+}
+.results-block{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:40px;box-shadow:0 8px 30px rgba(0,82,212,0.12);border:2px solid var(--light-blue);margin-top:0;text-align:center}
+.results-title{font-weight:700;font-size:24px;margin-bottom:16px;color:#0f1724}
+.results-description{font-size:16px;line-height:1.6;color:#374151;margin-bottom:24px}
+.results-buttons{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap;justify-content:center}
+.btn-partnership{background:linear-gradient(135deg,var(--blue),#0066ff);color:white;padding:12px 24px;border-radius:10px;text-decoration:none;font-size:14px;display:inline-block;font-weight:500;border:none;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(0,82,212,0.3)}
+.btn-partnership:hover{background:linear-gradient(135deg,#003d9e,#0052d4);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,82,212,0.4)}
+.btn-join{background:white;color:var(--blue);padding:12px 24px;border-radius:10px;text-decoration:none;font-size:14px;display:inline-block;font-weight:500;border:2px solid var(--blue);cursor:pointer;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,82,212,0.1)}
+.btn-join:hover{background:linear-gradient(135deg,#d0e4ff,#e0edff);transform:translateY(-3px);box-shadow:0 4px 15px rgba(0,82,212,0.2);border-color:#0066ff}
+.results-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:32px}
+.result-stat-item{text-align:center;padding:20px;background:linear-gradient(135deg,var(--light-blue),#e0edff);border-radius:10px;border:2px solid rgba(0,82,212,0.2);box-shadow:0 4px 15px rgba(0,82,212,0.1);transition:all 0.3s}
+.result-stat-item:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,82,212,0.2);border-color:var(--blue);background:linear-gradient(135deg,#cce0ff,var(--light-blue))}
+.result-stat-number{font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;margin-bottom:8px}
+.result-stat-label{font-size:14px;color:#374151;line-height:1.4}
+.resources-new-block{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:40px;box-shadow:0 8px 30px rgba(0,82,212,0.12);border:2px solid var(--light-blue);margin-top:0}
+.expected-results-block{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:40px;box-shadow:0 8px 30px rgba(0,82,212,0.12);border:2px solid var(--light-blue);margin-top:0}
+.expected-results-title{font-weight:700;font-size:24px;margin-bottom:24px;color:#0f1724;text-align:center}
+.expected-results-list{list-style:none;padding:0;margin:0}
+.expected-results-item{display:flex;gap:16px;margin-bottom:12px;padding:16px;background:linear-gradient(135deg,var(--light-blue),#e0edff);border-radius:10px;border-left:4px solid var(--blue);border-right:4px solid var(--purple);transition:all 0.3s;box-shadow:0 2px 8px rgba(0,82,212,0.1)}
+.expected-results-item:hover{background:linear-gradient(135deg,#c4d9ff,#d0e4ff);transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,82,212,0.2);border-left-width:6px;border-right-width:6px}
+.expected-results-item-text{flex:1;font-size:14px;line-height:1.4;color:#374151;text-align:center}
+.resources-new-title{font-weight:700;font-size:24px;margin-bottom:16px;color:#0f1724}
+.resources-new-description{font-size:16px;line-height:1.6;color:#374151;margin-bottom:32px}
+.resources-cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:32px}
+.resource-card{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:24px;border:2px solid #e5e7eb;transition:all 0.3s;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
+.resource-card:hover{box-shadow:0 12px 30px rgba(0,82,212,0.15);transform:translateY(-6px);border-color:var(--blue);background:linear-gradient(135deg,white,#f0f7ff)}
+.resource-card-image{width:100%;height:180px;background:linear-gradient(135deg,#f8f9fa,#e5e7eb);border-radius:8px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;border:1px solid #e5e7eb;transition:all 0.3s}
+.resource-card:hover .resource-card-image{background:linear-gradient(135deg,var(--light-blue),#cce0ff);border-color:var(--blue)}
+.resource-card-category{font-size:13px;color:var(--blue);font-weight:500;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.resource-card-title{font-size:20px;font-weight:700;color:#0f1724;margin-bottom:12px;line-height:1.3}
+.resource-card-description{font-size:14px;line-height:1.6;color:#374151;margin-bottom:16px}
+.resource-card-link{color:var(--blue);text-decoration:none;font-size:14px;font-weight:500;display:inline-block;transition:all 0.3s}
+.resource-card-link:hover{color:#003d9e;text-decoration:underline}
+.btn-view-all-resources{width:100%;max-width:400px;margin:0 auto;background:linear-gradient(135deg,var(--blue),#0066ff);color:white;padding:14px 24px;border-radius:10px;text-decoration:none;font-size:16px;display:block;font-weight:500;text-align:center;transition:all 0.3s;box-shadow:0 4px 15px rgba(0,82,212,0.3)}
+.btn-view-all-resources:hover{background:linear-gradient(135deg,#003d9e,#0052d4);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,82,212,0.4)}
+.resource-filter-btn{background:white;color:var(--muted);padding:8px 16px;border:2px solid #e5e7eb;border-radius:8px;font-size:14px;cursor:pointer;transition:all 0.3s;font-weight:400}
+.resource-filter-btn:hover{background:#f6f8fa;border-color:var(--blue);color:var(--blue)}
+.resource-filter-btn.active{background:var(--blue);color:white;border-color:var(--blue);font-weight:500}
+#resourceSearch:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,82,212,0.1)}
+@media (max-width:968px){
+ .resources-cards-grid{grid-template-columns:1fr}
+}
+.news-events-block{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:40px;box-shadow:0 8px 30px rgba(0,82,212,0.12);border:2px solid var(--light-blue);margin-top:0}
+.news-events-title{font-weight:700;font-size:24px;margin-bottom:24px;color:#0f1724}
+.news-events-content{display:flex;gap:24px;align-items:flex-start}
+.news-image-container{flex:0 0 70%;background:#f8f9fa;border-radius:8px;overflow:hidden;min-height:300px;display:flex;align-items:center;justify-content:center;color:var(--muted);border:1px solid #e5e7eb}
+.news-image-container img{width:100%;height:100%;object-fit:cover}
+.news-list-container{flex:0 0 30%}
+.news-list{list-style:none;padding:0;margin:0}
+.news-item{padding:10px;border-bottom:1px solid #d0e4ff;cursor:pointer;transition:all 0.3s}
+.news-item:last-child{border-bottom:none}
+.news-item:hover{background:#d0e4ff;border-radius:6px}
+.news-item-date{font-size:11px;color:var(--muted);margin-bottom:4px}
+.news-item-title{font-size:13px;font-weight:600;color:#0f1724;line-height:1.3;margin-bottom:3px}
+.news-item-excerpt{font-size:11px;color:#6b7280;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;word-break:break-word}
+@media (max-width:968px){
+ .news-events-content{flex-direction:column}
+ .news-image-container{flex:1 1 100%;min-height:300px}
+ .news-list-container{flex:1 1 100%}
+}
+.faq-item.expanded .faq-answer{max-height:500px;padding-top:12px}
+.faq-item.expanded > div > div:last-child{transform:rotate(45deg)}
+.faq-item:hover{background:linear-gradient(135deg,#c4d9ff,#d0e4ff);box-shadow:0 4px 15px rgba(0,82,212,0.15)}
+#subscribeEmail:focus{outline:none;border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.15)}
+#subscribeEmail::placeholder{color:rgba(255,255,255,0.5)}
+#subscribeForm button[type="submit"]:hover{background:linear-gradient(135deg,#003d9e,#0052d4);transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,82,212,0.4)}
+</style>
+</head>
+
+<body>
+<header>
+ <div class="header-inner">
+   <a href="#home" style="display:flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none;color:inherit">
+     <div class="logo">A</div>
+     <div>
+      <div style="font-weight:700;font-size:15px;white-space:nowrap">Akelius Казахстан</div>
+      <div class="small" style="font-size:11px;white-space:nowrap" data-i18n="header.subtitle">Языковое образование для школ</div>
+     </div>
+   </a>
+
+   <button class="menu-toggle" aria-label="Меню" id="menuToggle">
+     <span></span>
+     <span></span>
+     <span></span>
+   </button>
+
+  <nav id="mainNav">
+    <a href="#about" data-i18n="menu.about">О проекте</a>
+    <a href="#news" data-i18n="menu.news">Новости и события</a>
+    <a href="#resources" data-i18n="menu.resources">Ресурсы</a>
+    <a href="#results" data-i18n="menu.results">Достижения</a>
+    <a href="#support" data-i18n="menu.support">Поддержка</a>
+  </nav>
+
+   <nav class="lang" aria-label="Выбор языка">
+        <a href="#login" class="btn-login" data-i18n="header.login">Вход</a>
+        <span style="color:#d0d7de;margin:0 4px">|</span>
+        <button type="button" data-lang="ru" class="active">RU</button>
+        <button type="button" data-lang="kk">KZ</button>
+        <button type="button" data-lang="en">EN</button>
+      </nav>
+ </div>
+</header>
+
+<main class="container" id="home">
+
+<section id="about" class="hero-block">
+ <div class="hero-content">
+   <div class="hero-text">
+    
+    <h2 data-i18n="hero.title">Цифровое образование без границ</h2>
+    <p style="font-size:16px;line-height:1.6;color:#374151;margin-bottom:20px" data-i18n="hero.mission">Миссия Akelius - обеспечить равный доступ учеников к языковому образованию в Казахстане через цифровые инновации и обучение педагогов и IT-специалистов современным цифровым инструментам</p>
+     
+     <div class="stats-grid">
+       <div class="stat-item">
+         <div class="stat-number">1900+</div>
+        <div class="stat-label" data-i18n="stats.resources">ресурсов</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">27</div>
+        <div class="stat-label" data-i18n="stats.schools">школ</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">98</div>
+        <div class="stat-label" data-i18n="stats.teachers">учителей</div>
+       </div>
+     </div>
+     
+   <div style="text-align:center">
+      <a href="#teacher-hub" class="btn-primary" data-i18n="hero.btnTeacherHub">Teacher Hub</a>
+      <a href="https://languages.akelius.com/" class="btn-secondary" target="_blank" data-i18n="hero.btnPlatform">Платформа Akelius</a>
+    </div>
+   </div>
+   <div class="hero-image">
+     <div class="image-slider">
+       <div class="slide active" style="background:#e5e7eb"></div>
+       <div class="slide" style="background:#d1d5db"></div>
+       <div class="slide" style="background:#9ca3af"></div>
+       <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
+       <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
+       <div class="slider-controls">
+         <span class="slider-dot active" onclick="currentSlide(0)"></span>
+         <span class="slider-dot" onclick="currentSlide(1)"></span>
+         <span class="slider-dot" onclick="currentSlide(2)"></span>
+       </div>
+     </div>
+   </div>
+ </div>
+</section>
+
+<section id="news" class="hero-block" style="padding:1px;background:transparent">
+ <div class="news-events-block">
+   <div class="news-events-title" data-i18n="news.title">Новости и события</div>
+   <div class="news-events-content">
+     <div class="news-image-container">
+       <div style="text-align:center;color:var(--muted);font-size:14px">Изображение новости</div>
+     </div>
+     <div class="news-list-container">
+       <ul class="news-list">
+         <li class="news-item">
+           <div class="news-item-date">15 января 2025</div>
+           <div class="news-item-title">Заголовок новости 1</div>
+           <div class="news-item-excerpt">Краткое описание новости...Краткое описание новости...
+            Краткое описание новости...Краткое описание новости...Краткое описание новости...Краткое описание новости...Краткое описание новости...
+            Краткое описание новости...</div>
+         </li>
+         <li class="news-item">
+           <div class="news-item-date">10 января 2025</div>
+           <div class="news-item-title">Заголовок новости 2</div>
+           <div class="news-item-excerpt">Краткое описание новости...Краткое описан</div>
+         </li>
+         <li class="news-item">
+           <div class="news-item-date">5 января 2025</div>
+           <div class="news-item-title">Заголовок новости 3</div>
+           <div class="news-item-excerpt">Краткое описание новости...</div>
+         </li>
+         <li class="news-item">
+           <div class="news-item-date">1 января 2025</div>
+           <div class="news-item-title">Заголовок новости 4</div>
+           <div class="news-item-excerpt">Краткое описание новости...</div>
+         </li>
+       </ul>
+     </div>
+   </div>
+ </div>
+</section>
+
+<section class="hero-block" style="padding:1px">
+ <div class="geography-block">
+  <div style="font-weight:700;font-size:18px;margin-bottom:12px" data-i18n="geography.title">География проекта</div>
+  <div class="small" style="margin-bottom:16px" data-i18n="geography.description">В реализации проекта Akelius участвуют 27 школ из 6 регионов Казахстана: Астана, Алматы, Шымкент, Актау, Туркестан и Семей.</div>
+   <div id="map2" style="height:450px;border-radius:8px;z-index:1"></div>
+ </div>
+</section>
+
+<section class="hero-block" style="padding:1px">
+ <div class="video-sponsors-block">
+   <div class="video-container">
+     <div class="video-wrapper">
+       <iframe src="https://www.youtube.com/watch?v=7Jr2dZdlYTc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     </div>
+   </div>
+   <div class="sponsors-container">
+     <div class="sponsors-title" data-i18n="sponsors.title">Нас поддерживают</div>
+     <div class="sponsors-grid">
+       <div class="sponsor-logo">
+         <div style="color:var(--muted);font-size:12px;text-align:center">Логотип 1</div>
+       </div>
+       <div class="sponsor-logo">
+         <div style="color:var(--muted);font-size:12px;text-align:center">Логотип 2</div>
+       </div>
+       <div class="sponsor-logo">
+         <div style="color:var(--muted);font-size:12px;text-align:center">Логотип 3</div>
+       </div>
+      <div class="sponsor-logo">
+        <div style="color:var(--muted);font-size:12px;text-align:center">Логотип 4</div>
+      </div>
+      <div class="sponsor-logo">
+        <div style="color:var(--muted);font-size:12px;text-align:center">Логотип 5</div>
+      </div>
+      <div class="sponsor-logo">
+        <div style="color:var(--muted);font-size:12px;text-align:center">Логотип 6</div>
+      </div>
+    </div>
+    <a href="#support" class="btn-support" data-i18n="sponsors.btnSupport">Поддержка</a>
+  </div>
+ </div>
+</section>
+
+
+<section id="video" class="card" style="margin-top:40px">
+  <h2 data-i18n="video.title">Видео о проекте</h2>
+  <p style="color:#6b7280;font-size:14px;margin-top:6px" data-i18n="video.description">
+    Короткое видео о внедрении Akelius в школах Казахстана.
+  </p>
+
+  <!-- Карточка превью -->
+  <div id="videoCard"
+       style="position:relative;cursor:pointer;border-radius:14px;overflow:hidden;
+              height:320px;display:flex;align-items:center;justify-content:center;
+              box-shadow:0 8px 24px rgba(11,98,200,0.1);">
+
+    <!-- Обложка -->
+    <img src="thumbnail.jpg"
+         alt="Видео о проекте"
+         style="position:absolute;width:100%;height:100%;object-fit:cover;
+                filter:brightness(0.55);">
+
+    <!-- Play-кнопка -->
+    <div style="position:relative;z-index:10;
+                width:84px;height:84px;border-radius:50%;
+                background:rgba(255,255,255,0.9);
+                display:flex;align-items:center;justify-content:center;
+                backdrop-filter:blur(4px);
+                box-shadow:0 4px 20px rgba(0,0,0,0.25);
+                transition:0.25s;">
+      <div style="font-size:42px;color:#0b62c8;margin-left:6px;">▶</div>
+    </div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="videoModal"
+       style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+              background:rgba(0,0,0,0.75);backdrop-filter:blur(3px);
+              align-items:center;justify-content:center;z-index:200;">
+    <div style="width:90%;max-width:900px;position:relative;">
+      <video id="videoPlayer" controls style="width:100%;border-radius:14px;">
+        <source src="akelius.mp4" type="video/mp4">
+        <span data-i18n="video.notSupported">Ваш браузер не поддерживает видео.</span>
+      </video>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="resources" class="hero-block" style="padding:1px;background:transparent">
+ <div class="resources-new-block">
+   <div class="resources-new-title" data-i18n="resources.title">Ресурсы</div>
+   <div class="resources-new-description" data-i18n="resources.description">Наша платформа предоставляет широкий спектр образовательных материалов и инструментов для эффективного обучения и профессионального развития учителей.</div>
+   
+   <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;align-items:center">
+     <div style="flex:1;min-width:200px">
+       <input type="text" id="resourceSearch" placeholder="Поиск..." style="width:100%;padding:10px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:14px;transition:all 0.3s" data-i18n-placeholder="resources.searchPlaceholder">
+     </div>
+     <div style="display:flex;gap:8px;flex-wrap:wrap">
+       <button class="resource-filter-btn active" data-category="all" data-i18n="resources.filterAll">Все</button>
+       <button class="resource-filter-btn" data-category="Планирование" data-i18n="resources.filterPlanning">Планирование</button>
+       <button class="resource-filter-btn" data-category="Задание" data-i18n="resources.filterAssignment">Задание</button>
+       <button class="resource-filter-btn" data-category="Форум" data-i18n="resources.filterForum">Форум</button>
+     </div>
+   </div>
+   
+   <div class="resources-cards-grid" id="resourcesGrid">
+     <div class="resource-card" data-category="Планирование">
+       <div class="resource-card-image">Картинка</div>
+       <div class="resource-card-category">Планирование</div>
+       <div class="resource-card-title">Методические материалы</div>
+       <div class="resource-card-description">Планируйте занятия эффективно вместе с платформой Akelius</div>
+       <a href="#planning" class="resource-card-link">читать далее</a>
+     </div>
+     
+     <div class="resource-card" data-category="Задание">
+       <div class="resource-card-image">Картинка</div>
+       <div class="resource-card-category">Задание</div>
+       <div class="resource-card-title">Учебные материалы</div>
+       <div class="resource-card-description">Используйте готовые интерактивные задания и ресурсы на платформе Akelius</div>
+       <a href="#materials" class="resource-card-link">читать далее</a>
+     </div>
+     
+     <div class="resource-card" data-category="Форум">
+       <div class="resource-card-image">Картинка</div>
+       <div class="resource-card-category">Форум</div>
+       <div class="resource-card-title">Teacher Hub</div>
+       <div class="resource-card-description">Обменивайтесь образовательными материалами с учителями со всего Казахстана</div>
+       <a href="#forum" class="resource-card-link">читать далее</a>
+     </div>
+   </div>
+   
+      <a href="#all-resources" class="btn-view-all-resources" data-i18n="resources.viewAll">Посмотреть все ресурсы</a>
+  </div>
+</section>
+
+<section id="results" class="hero-block" style="padding:1px;background:transparent">
+ <div class="results-block">
+  <div class="results-title" data-i18n="results.title">Наши результаты за предыдущие годы 2021 -2024</div>
+  <div class="results-description" data-i18n="results.description">Представленные данные отражают лишь наши первые шаги, и в дальнейшем мы планируем значительно расширить масштаб проекта.</div>
+  <div class="results-buttons">
+    <a href="#partnership" class="btn-partnership" data-i18n="results.btnPartnership">Возможности партнерства</a>
+    <a href="#join" class="btn-join" data-i18n="results.btnJoin">Присоединиться к партнёрству</a>
+  </div>
+   <div class="results-stats">
+     <div class="result-stat-item">
+       <div class="result-stat-number">+1900</div>
+      <div class="result-stat-label" data-i18n="results.statChildren">детей обучено</div>
+    </div>
+    <div class="result-stat-item">
+      <div class="result-stat-number">18</div>
+      <div class="result-stat-label" data-i18n="results.statSchools">школ из трёх регионов Казахстана</div>
+    </div>
+    <div class="result-stat-item">
+      <div class="result-stat-number">98</div>
+      <div class="result-stat-label" data-i18n="results.statTeachers">учителей обучено</div>
+    </div>
+    <div class="result-stat-item">
+      <div class="result-stat-number">24/7</div>
+      <div class="result-stat-label" data-i18n="results.statSupport">Customer Support</div>
+     </div>
+   </div>
+ </div>
+</section>
+
+<section class="hero-block" style="padding:1px;background:transparent">
+ <div class="expected-results-block">
+   <div class="expected-results-title" data-i18n="expectedResults.title">Ожидаемые результаты внедрения проекта Akelius в регионах Казахстана (2025-2027)</div>
+   <ul class="expected-results-list">
+     <li class="expected-results-item">
+       <div class="expected-results-item-text">Повышение доступности ресурсов — создание условий для равного доступа к образовательным материалам Akelius для детей из различных регионов Казахстана.</div>
+     </li>
+     <li class="expected-results-item">
+       <div class="expected-results-item-text">Развитие методической базы и материалов — обеспечение школ качественными методическими ресурсами, создание обучающих модулей, а также интеграция материалов Akelius в учебный процесс.</div>
+     </li>
+     <li class="expected-results-item">
+       <div class="expected-results-item-text">Повышение квалификации персонала — организация курсов и тренингов для педагогов, формирование устойчивых навыков использования цифровых образовательных ресурсов Akelius.</div>
+     </li>
+     <li class="expected-results-item">
+       <div class="expected-results-item-text">Внедрение инновационных подходов в обучение — использование интерактивных методик, цифровых инструментов и мультимедийных ресурсов для повышения вовлечённости учеников.</div>
+     </li>
+     <li class="expected-results-item">
+       <div class="expected-results-item-text">Создание устойчивой экосистемы цифрового обучения — развитие региональных центров компетенций, поддержка школ в сопровождении проекта, регулярный мониторинг и оценка эффективности внедрения.</div>
+     </li>
+     <li class="expected-results-item">
+       <div class="expected-results-item-text">Информационная поддержка и продвижение — размещение материалов на официальном сайте, публикация новостей, организация форумов и мероприятий, направленных на популяризацию проекта и обмен опытом.</div>
+     </li>
+   </ul>
+ </div>
+</section>
+
+<section id="team" class="card">
+ <h3 data-i18n="team.title">Наша команда</h3>
+ <p class="small" data-i18n="team.description">Специалисты, которые развивают проект Akelius в Казахстане.</p>
+
+ <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px;margin-top:22px">
+
+   <div class="team-card">
+     <div class="team-photo">Фото</div>
+     <div style="font-weight:700;margin-top:12px">Имя Фамилия 1</div>
+     <div class="small">Руководитель проекта</div>
+   </div>
+
+   <div class="team-card">
+     <div class="team-photo">Фото</div>
+     <div style="font-weight:700;margin-top:12px">Имя Фамилия 2</div>
+     <div class="small">Методист</div>
+   </div>
+
+   <div class="team-card">
+     <div class="team-photo">Фото</div>
+     <div style="font-weight:700;margin-top:12px">Имя Фамилия 3</div>
+     <div class="small">Тренер</div>
+   </div>
+
+   <div class="team-card">
+     <div class="team-photo">Фото</div>
+     <div style="font-weight:700;margin-top:12px">Имя Фамилия 4</div>
+     <div class="small">Координатор</div>
+   </div>
+
+   <div class="team-card">
+     <div class="team-photo">Фото</div>
+     <div style="font-weight:700;margin-top:12px">Имя Фамилия 5</div>
+     <div class="small">Техническая поддержка</div>
+   </div>
+
+ </div>
+</section>
+
+<section id="support" class="card">
+ <h2 data-i18n="support.title">Поддержка</h2>
+ <div style="margin-top:24px">
+   <h3 style="font-size:20px;font-weight:700;margin-bottom:16px;color:#0f1724" data-i18n="support.faqTitle">FAQ</h3>
+   <div style="display:flex;flex-direction:column;gap:16px">
+     <div class="faq-item" style="background:linear-gradient(135deg,var(--light-blue),#e0edff);border-radius:10px;padding:20px;border-left:4px solid var(--blue);transition:all 0.3s;cursor:pointer">
+       <div style="display:flex;justify-content:space-between;align-items:center">
+         <div style="font-weight:600;font-size:16px;color:#0f1724" data-i18n="support.faq1.question">Как войти в Teacher Hub?</div>
+         <div style="font-size:20px;color:var(--blue);transition:transform 0.3s">+</div>
+       </div>
+       <div class="faq-answer" style="max-height:0;overflow:hidden;transition:max-height 0.3s;margin-top:12px;color:#374151;line-height:1.6">
+         <div data-i18n="support.faq1.answer">Для входа в Teacher Hub используйте учетные данные, предоставленные администратором проекта. Если у вас нет доступа, обратитесь к координатору проекта в вашем регионе.</div>
+       </div>
+     </div>
+     <div class="faq-item" style="background:linear-gradient(135deg,var(--light-blue),#e0edff);border-radius:10px;padding:20px;border-left:4px solid var(--blue);transition:all 0.3s;cursor:pointer">
+       <div style="display:flex;justify-content:space-between;align-items:center">
+         <div style="font-weight:600;font-size:16px;color:#0f1724" data-i18n="support.faq2.question">Как загрузить материал?</div>
+         <div style="font-size:20px;color:var(--blue);transition:transform 0.3s">+</div>
+       </div>
+       <div class="faq-answer" style="max-height:0;overflow:hidden;transition:max-height 0.3s;margin-top:12px;color:#374151;line-height:1.6">
+         <div data-i18n="support.faq2.answer">После входа в Teacher Hub перейдите в раздел \"Материалы\" и нажмите кнопку \"Загрузить\". Выберите файл и заполните необходимую информацию о материале.</div>
+       </div>
+     </div>
+     <div class="faq-item" style="background:linear-gradient(135deg,var(--light-blue),#e0edff);border-radius:10px;padding:20px;border-left:4px solid var(--blue);transition:all 0.3s;cursor:pointer">
+       <div style="display:flex;justify-content:space-between;align-items:center">
+         <div style="font-weight:600;font-size:16px;color:#0f1724" data-i18n="support.faq3.question">К кому обращаться за техподдержкой?</div>
+         <div style="font-size:20px;color:var(--blue);transition:transform 0.3s">+</div>
+       </div>
+       <div class="faq-answer" style="max-height:0;overflow:hidden;transition:max-height 0.3s;margin-top:12px;color:#374151;line-height:1.6">
+         <div data-i18n="support.faq3.answer">За технической поддержкой обращайтесь по email: support@akelius.kz или свяжитесь с координатором проекта в вашем регионе.</div>
+       </div>
+     </div>
+   </div>
+ </div>
+</section>
+
+</main>
+
+<footer id="contacts">
+ <div class="footer-new-grid">
+   <div>
+    <div class="footer-block-title">Akelius</div>
+    <div class="footer-block-description" data-i18n="footer.description">Akelius способствует улучшению качества образования в различных странах мира</div>
+     <div class="footer-social-icons">
+       <a href="#" class="footer-social-icon" aria-label="Instagram" title="Instagram">
+         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+         </svg>
+       </a>
+       <a href="#" class="footer-social-icon" aria-label="Facebook" title="Facebook">
+         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+         </svg>
+       </a>
+       <a href="#" class="footer-social-icon" aria-label="YouTube" title="YouTube">
+         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+           <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+         </svg>
+       </a>
+     </div>
+   </div>
+   
+   <div>
+     <div class="footer-links-columns">
+       <div>
+        <a href="#home" class="footer-link" data-i18n="footer.home">Главная</a>
+        <a href="#about" class="footer-link" data-i18n="footer.about">О проекте</a>
+        <a href="#resources" class="footer-link" data-i18n="footer.resources">Ресурсы</a>
+      </div>
+      <div>
+        <a href="#news" class="footer-link" data-i18n="footer.news">Новости и события</a>
+        <a href="#results" class="footer-link" data-i18n="footer.results">Достижения</a>
+        <a href="#support" class="footer-link" data-i18n="footer.support">Поддержка</a>
+       </div>
+     </div>
+   </div>
+   
+   <div>
+     <div class="footer-block-title" data-i18n="footer.contacts">Контакты</div>
+     <div class="footer-block-description">Республика Казахстан, город Алматы, ул.Манаса 34/1<br>87273200000<br><a href="mailto:reception@iitu.edu.kz" style="color:#cbd5e0;text-decoration:none;transition:color 0.3s">reception@iitu.edu.kz</a></div>
+   </div>
+   
+  <div style="grid-column:1/-1;text-align:center;margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1)">
+    <form id="subscribeForm" style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center">
+      <span style="font-size:13px;color:#cbd5e0" data-i18n="footer.subscribe">Подписаться</span>
+      <input type="email" id="subscribeEmail" placeholder="Email" required style="padding:8px 12px;border:2px solid rgba(255,255,255,0.2);border-radius:6px;background:rgba(255,255,255,0.1);color:#e2e8f0;font-size:12px;transition:all 0.3s;width:200px" data-i18n-placeholder="footer.emailPlaceholder">
+      <button type="submit" style="padding:8px 16px;background:linear-gradient(135deg,var(--blue),#0066ff);color:white;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.3s;white-space:nowrap" data-i18n="footer.subscribeBtn">Подписаться</button>
+      <span style="font-size:12px;color:#9ca3af" data-i18n="footer.subscribeDesc">Получать новости проекта</span>
+    </form>
+    <div id="subscribeMessage" style="margin-top:12px;font-size:12px;display:none"></div>
+  </div>
+ </div>
+</footer>
+
+</body>
+</html>
+</div>
+  </main>
+
+  <script>
+    // Мобильное меню
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        mainNav.classList.toggle('active');
+      });
+      
+      // Закрытие меню при клике на ссылку
+      const navLinks = mainNav.querySelectorAll('a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          menuToggle.classList.remove('active');
+          mainNav.classList.remove('active');
+        });
+      });
+      
+      // Закрытие меню при клике вне его
+      document.addEventListener('click', (e) => {
+        if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+          menuToggle.classList.remove('active');
+          mainNav.classList.remove('active');
+        }
+      });
+    }
+
+    const langNav = document.querySelector('.lang');
+    const buttons = Array.from(langNav.querySelectorAll('button'));
+
+    function setActive(code){
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.lang === code));
+      localStorage.setItem('site_lang', code);
+      document.documentElement.lang = (code === 'kk') ? 'kk' : code; // ru | kk | en
+      if (typeof currentLang !== 'undefined') {
+        currentLang = code;
+        translate();
+      }
+    }
+
+    langNav.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if(!btn) return;
+      setActive(btn.dataset.lang);
+    });
+
+    const saved = localStorage.getItem('site_lang');
+    if(saved){ setActive(saved); }
+
+    // Слайдер изображений
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+
+    function showSlide(index) {
+      if (index >= slides.length) currentSlideIndex = 0;
+      if (index < 0) currentSlideIndex = slides.length - 1;
+      
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      slides[currentSlideIndex].classList.add('active');
+      dots[currentSlideIndex].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+      currentSlideIndex += direction;
+      showSlide(currentSlideIndex);
+    }
+
+    function currentSlide(index) {
+      currentSlideIndex = index;
+      showSlide(currentSlideIndex);
+    }
+
+    // Автоматическое переключение слайдов каждые 5 секунд
+    setInterval(() => {
+      currentSlideIndex++;
+      showSlide(currentSlideIndex);
+    }, 5000);
+
+    // Инициализация второй карты Казахстана
+    if (document.getElementById('map2')) {
+      // Центр карты - Казахстан
+      const map2 = L.map('map2').setView([48.0, 66.0], 6);
+
+      // Добавление минималистичных тайлов (только границы, без лишних деталей)
+      // Используем CartoDB Positron - светлая минималистичная карта
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap contributors © CARTO',
+        maxZoom: 19,
+        subdomains: 'abcd'
+      }).addTo(map2);
+
+      // Загрузка точных границ Казахстана из GeoJSON
+      // Используем несколько источников для надежности
+      const loadKazakhstanBorders = (map) => {
+        // Попытка 1: Natural Earth Data (высокая точность)
+        fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+          .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+          })
+          .then(data => {
+            const kazakhstan = data.features?.find(feature => {
+              const props = feature.properties || {};
+              return props.name === 'Kazakhstan' || 
+                     props.NAME === 'Kazakhstan' ||
+                     props.NAME_EN === 'Kazakhstan' ||
+                     props.NAME_LONG === 'Kazakhstan' ||
+                     props.ADMIN === 'Kazakhstan';
+            });
+            
+            if (kazakhstan) {
+              const layer = L.geoJSON(kazakhstan, {
+                style: {
+                  color: '#0052d4',
+                  weight: 3,
+                  fillColor: '#0066ff',
+                  fillOpacity: 0.5,
+                  opacity: 0.8
+                }
+              }).addTo(map);
+              map.fitBounds(layer.getBounds(), { padding: [8, 8] });
+              return true;
+            }
+            throw new Error('Kazakhstan not found in data');
+          })
+          .catch(() => {
+            // Попытка 2: Альтернативный источник
+            return fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries/KAZ.geo.json')
+              .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+              })
+              .then(data => {
+                const layer = L.geoJSON(data, {
+                  style: {
+                    color: '#0052d4',
+                    weight: 3,
+                    fillColor: '#0066ff',
+                    fillOpacity: 0.5,
+                    opacity: 0.8
+                  }
+                }).addTo(map);
+                map.fitBounds(layer.getBounds(), { padding: [8, 8] });
+                return true;
+              })
+              .catch(() => {
+                // Попытка 3: Используем более точный упрощенный полигон
+                return fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+                  .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                  })
+                  .then(data => {
+                    const kazakhstan = data.features?.find(feature => {
+                      const props = feature.properties || {};
+                      return props.ADMIN === 'Kazakhstan' || 
+                             props.NAME === 'Kazakhstan' ||
+                             props.NAME_LONG === 'Kazakhstan';
+                    });
+                    
+                    if (kazakhstan) {
+                      const layer = L.geoJSON(kazakhstan, {
+                        style: {
+                          color: '#0052d4',
+                          weight: 3,
+                          fillColor: '#0066ff',
+                          fillOpacity: 0.5,
+                          opacity: 0.8
+                        }
+                      }).addTo(map);
+                      map.fitBounds(layer.getBounds(), { padding: [8, 8] });
+                      return true;
+                    }
+                    throw new Error('Kazakhstan not found');
+                  })
+                  .catch(() => {
+                    // Запасной вариант: упрощенный, но более точный полигон
+                    const simplifiedBorder = [
+                      [55.4421, 46.4664], [55.1879, 50.0644], [54.5000, 51.5000], 
+                      [50.0000, 51.0000], [45.0000, 51.5000], [41.0000, 52.0000], 
+                      [40.5000, 55.0000], [42.0000, 60.0000], [45.0000, 68.0000], 
+                      [48.0000, 75.0000], [50.0000, 80.2275], [53.0000, 81.0000], 
+                      [55.0000, 79.0000], [55.5000, 73.0000], [55.4421, 66.0000], 
+                      [55.0000, 60.0000], [55.1879, 55.0000], [55.4421, 50.0644], 
+                      [55.4421, 46.4664]
+                    ];
+                    const layer = L.polygon(simplifiedBorder, {
+                      color: '#0052d4',
+                      weight: 3,
+                      fillColor: '#0066ff',
+                      fillOpacity: 0.5,
+                      opacity: 0.8
+                    }).addTo(map);
+                    map.fitBounds(layer.getBounds(), { padding: [8, 8] });
+                  });
+              });
+          });
+      };
+
+      // Загружаем границы
+      loadKazakhstanBorders(map2);
+
+      // Координаты городов
+      const cities2 = [
+        { name: 'Астана', lat: 51.1694, lng: 71.4491 },
+        { name: 'Алматы', lat: 43.2220, lng: 76.8512 },
+        { name: 'Шымкент', lat: 42.3419, lng: 69.5901 },
+        { name: 'Актау', lat: 43.6509, lng: 51.1724 },
+        { name: 'Туркестан', lat: 43.3011, lng: 68.2544 },
+        { name: 'Семей', lat: 50.4108, lng: 80.2275 }
+      ];
+
+      // Создание кастомных иконок-кружков
+      const createCircleIcon = (cityName) => {
+        return L.divIcon({
+          className: 'custom-circle-marker',
+          html: `<div style="position:relative;text-align:center;">
+                   <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-weight:600;color:#ffb300;text-shadow:1px 1px 2px rgba(255,255,255,0.9), -1px -1px 2px rgba(255,255,255,0.9);background:rgba(255,255,255,0.7);padding:2px 4px;border-radius:3px;">${cityName}</div>
+                   <div style="width:16px;height:16px;border-radius:50%;background:#ffb300;border:2px solid #ffffff;box-shadow:0 2px 4px rgba(0,0,0,0.3);position:relative;margin:0 auto;margin-top:4px;"></div>
+                 </div>`,
+          iconSize: [60, 30],
+          iconAnchor: [30, 20],
+          popupAnchor: [0, -20]
+        });
+      };
+
+      // Добавление маркеров-кружков для каждого города
+      cities2.forEach(city => {
+        L.marker([city.lat, city.lng], { icon: createCircleIcon(city.name) })
+          .addTo(map2)
+          .bindPopup('<strong>' + city.name + '</strong>');
+      });
+    }
+	
+	
+	
+	
+	
+
+
+	
+	
+	
+	const videoCard = document.getElementById('videoCard');
+const videoModal = document.getElementById('videoModal');
+const videoPlayer = document.getElementById('videoPlayer');
+
+// Открыть проигрыватель
+videoCard.addEventListener('click', () => {
+  videoModal.style.display = 'flex';
+  videoPlayer.currentTime = 0;
+  videoPlayer.play();
+});
+
+// Закрыть при клике вне видео
+videoModal.addEventListener('click', (e) => {
+  if (e.target === videoModal) {
+    videoModal.style.display = 'none';
+    videoPlayer.pause();
+  }
+});
+	
+	
+	
+	
+	
+	
+  </script>
+
+  <script>
+    // i18n система
+    const translations = {
+      ru: {
+        'header.subtitle': 'Языковое образование для школ',
+        'header.login': 'Вход',
+        'menu.about': 'О проекте',
+        'menu.news': 'Новости и события',
+        'menu.resources': 'Ресурсы',
+        'menu.results': 'Достижения',
+        'menu.support': 'Поддержка',
+        'hero.title': 'Цифровое образование без границ',
+        'hero.mission': 'Миссия Akelius - обеспечить равный доступ учеников к языковому образованию в Казахстане через цифровые инновации и обучение педагогов и IT-специалистов современным цифровым инструментам',
+        'hero.btnTeacherHub': 'Teacher Hub',
+        'hero.btnPlatform': 'Платформа Akelius',
+        'stats.resources': 'ресурсов',
+        'stats.schools': 'школ',
+        'stats.teachers': 'учителей',
+        'news.title': 'Новости и события',
+        'geography.title': 'География проекта',
+        'geography.description': 'В реализации проекта Akelius участвуют 27 школ из 6 регионов Казахстана: Астана, Алматы, Шымкент, Актау, Туркестан и Семей.',
+        'sponsors.title': 'Нас поддерживают',
+        'sponsors.btnSupport': 'Поддержка',
+        'video.title': 'Видео о проекте',
+        'video.description': 'Короткое видео о внедрении Akelius в школах Казахстана.',
+        'video.notSupported': 'Ваш браузер не поддерживает видео.',
+        'resources.title': 'Ресурсы',
+        'resources.description': 'Наша платформа предоставляет широкий спектр образовательных материалов и инструментов для эффективного обучения и профессионального развития учителей.',
+        'resources.searchPlaceholder': 'Поиск...',
+        'resources.filterAll': 'Все',
+        'resources.filterPlanning': 'Планирование',
+        'resources.filterAssignment': 'Задание',
+        'resources.filterForum': 'Форум',
+        'resources.viewAll': 'Посмотреть все ресурсы',
+        'results.title': 'Наши результаты за предыдущие годы 2021 -2024',
+        'results.description': 'Представленные данные отражают лишь наши первые шаги, и в дальнейшем мы планируем значительно расширить масштаб проекта.',
+        'results.btnPartnership': 'Возможности партнерства',
+        'results.btnJoin': 'Присоединиться к партнёрству',
+        'results.statChildren': 'детей обучено',
+        'results.statSchools': 'школ из трёх регионов Казахстана',
+        'results.statTeachers': 'учителей обучено',
+        'results.statSupport': 'Customer Support',
+        'expectedResults.title': 'Ожидаемые результаты внедрения проекта Akelius в регионах Казахстана (2025-2027)',
+        'team.title': 'Наша команда',
+        'team.description': 'Специалисты, которые развивают проект Akelius в Казахстане.',
+        'support.title': 'Поддержка',
+        'support.faqTitle': 'FAQ',
+        'support.faq1.question': 'Как войти в Teacher Hub?',
+        'support.faq1.answer': 'Для входа в Teacher Hub используйте учетные данные, предоставленные администратором проекта. Если у вас нет доступа, обратитесь к координатору проекта в вашем регионе.',
+        'support.faq2.question': 'Как загрузить материал?',
+        'support.faq2.answer': 'После входа в Teacher Hub перейдите в раздел "Материалы" и нажмите кнопку "Загрузить". Выберите файл и заполните необходимую информацию о материале.',
+        'support.faq3.question': 'К кому обращаться за техподдержкой?',
+        'support.faq3.answer': 'За технической поддержкой обращайтесь по email: support@akelius.kz или свяжитесь с координатором проекта в вашем регионе.',
+        'footer.description': 'Akelius способствует улучшению качества образования в различных странах мира',
+        'footer.home': 'Главная',
+        'footer.about': 'О проекте',
+        'footer.resources': 'Ресурсы',
+        'footer.news': 'Новости и события',
+        'footer.results': 'Достижения',
+        'footer.support': 'Поддержка',
+        'footer.contacts': 'Контакты',
+        'footer.subscribe': 'Подписаться',
+        'footer.subscribeDesc': 'Получать новости проекта',
+        'footer.emailPlaceholder': 'Email',
+        'footer.subscribeBtn': 'Подписаться'
+      },
+      kk: {
+        'header.subtitle': 'Мектептерге тілдік білім беру',
+        'header.login': 'Кіру',
+        'menu.about': 'Жоба туралы',
+        'menu.news': 'Жаңалықтар мен оқиғалар',
+        'menu.resources': 'Ресурстар',
+        'menu.results': 'Жетістіктер',
+        'menu.support': 'Қолдау',
+        'hero.title': 'Шекарасыз цифрлық білім беру',
+        'hero.mission': 'Akelius миссиясы - цифрлық инновациялар арқылы Қазақстандағы оқушыларға тілдік білім беруге тең қолжетімділікті қамтамасыз ету және педагогтер мен IT-мамандарды заманауи цифрлық құралдарға оқыту',
+        'hero.btnTeacherHub': 'Teacher Hub',
+        'hero.btnPlatform': 'Akelius платформасы',
+        'stats.resources': 'ресурс',
+        'stats.schools': 'мектеп',
+        'stats.teachers': 'мұғалім',
+        'news.title': 'Жаңалықтар мен оқиғалар',
+        'geography.title': 'Жоба географиясы',
+        'geography.description': 'Akelius жобасын іске асыруға Қазақстанның 6 аймағынан 27 мектеп қатысады: Астана, Алматы, Шымкент, Ақтау, Түркістан және Семей.',
+        'sponsors.title': 'Бізді қолдайтындар',
+        'sponsors.btnSupport': 'Қолдау',
+        'video.title': 'Жоба туралы видео',
+        'video.description': 'Қазақстан мектептерінде Akelius енгізу туралы қысқа видео.',
+        'video.notSupported': 'Сіздің браузеріңіз видеоны қолдамайды.',
+        'resources.title': 'Ресурстар',
+        'resources.description': 'Біздің платформа тиімді оқыту және мұғалімдердің кәсіби дамуы үшін білім беру материалдары мен құралдарының кең спектрін ұсынады.',
+        'resources.searchPlaceholder': 'Іздеу...',
+        'resources.filterAll': 'Барлығы',
+        'resources.filterPlanning': 'Жоспарлау',
+        'resources.filterAssignment': 'Тапсырма',
+        'resources.filterForum': 'Форум',
+        'resources.viewAll': 'Барлық ресурстарды көру',
+        'results.title': '2021-2024 жылдардағы біздің нәтижелеріміз',
+        'results.description': 'Көрсетілген деректер тек біздің алғашқы қадамдарымызды көрсетеді, ал болашақта біз жоба ауқамын айтарлықтай кеңейтуді жоспарлап отырмыз.',
+        'results.btnPartnership': 'Серіктестік мүмкіндіктері',
+        'results.btnJoin': 'Серіктестікке қосылу',
+        'results.statChildren': 'бала оқытылды',
+        'results.statSchools': 'Қазақстанның үш аймағынан мектеп',
+        'results.statTeachers': 'мұғалім оқытылды',
+        'results.statSupport': 'Техникалық қолдау',
+        'expectedResults.title': 'Қазақстан аймақтарында Akelius жобасын енгізудің күтілетін нәтижелері (2025-2027)',
+        'team.title': 'Біздің команда',
+        'team.description': 'Қазақстанда Akelius жобасын дамытып жүрген мамандар.',
+        'support.title': 'Қолдау',
+        'support.faqTitle': 'Жиі қойылатын сұрақтар',
+        'support.faq1.question': 'Teacher Hub-қа қалай кіруге болады?',
+        'support.faq1.answer': 'Teacher Hub-қа кіру үшін жоба әкімшісі берген тіркелгі деректерін пайдаланыңыз. Егер сізде қолжетімділік жоқ болса, өз аймағыңыздағы жоба координаторына хабарласыңыз.',
+        'support.faq2.question': 'Материалды қалай жүктеуге болады?',
+        'support.faq2.answer': 'Teacher Hub-қа кіргеннен кейін "Материалдар" бөліміне өтіп, "Жүктеу" батырмасын басыңыз. Файлды таңдап, материал туралы қажетті ақпаратты толтырыңыз.',
+        'support.faq3.question': 'Техникалық қолдау үшін кімге хабарласуға болады?',
+        'support.faq3.answer': 'Техникалық қолдау үшін support@akelius.kz электрондық поштасына хабарласыңыз немесе өз аймағыңыздағы жоба координаторымен байланысыңыз.',
+        'footer.description': 'Akelius әлемнің әртүрлі елдерінде білім беру сапасын жақсартуға үлес қосады',
+        'footer.home': 'Басты бет',
+        'footer.about': 'Жоба туралы',
+        'footer.resources': 'Ресурстар',
+        'footer.news': 'Жаңалықтар мен оқиғалар',
+        'footer.results': 'Жетістіктер',
+        'footer.support': 'Қолдау',
+        'footer.contacts': 'Байланыс',
+        'footer.subscribe': 'Жазылу',
+        'footer.subscribeDesc': 'Жоба жаңалықтарын алу',
+        'footer.emailPlaceholder': 'Email',
+        'footer.subscribeBtn': 'Жазылу'
+      },
+      en: {
+        'header.subtitle': 'Language education for schools',
+        'header.login': 'Login',
+        'menu.about': 'About',
+        'menu.news': 'News and events',
+        'menu.resources': 'Resources',
+        'menu.results': 'Achievements',
+        'menu.support': 'Support',
+        'hero.title': 'Digital education without borders',
+        'hero.mission': 'Akelius mission is to ensure equal access of students to language education in Kazakhstan through digital innovations and training of teachers and IT specialists in modern digital tools',
+        'hero.btnTeacherHub': 'Teacher Hub',
+        'hero.btnPlatform': 'Akelius Platform',
+        'stats.resources': 'resources',
+        'stats.schools': 'schools',
+        'stats.teachers': 'teachers',
+        'news.title': 'News and events',
+        'geography.title': 'Project geography',
+        'geography.description': '27 schools from 6 regions of Kazakhstan participate in the implementation of the Akelius project: Astana, Almaty, Shymkent, Aktau, Turkestan and Semey.',
+        'sponsors.title': 'Our supporters',
+        'sponsors.btnSupport': 'Support',
+        'video.title': 'Video about the project',
+        'video.description': 'A short video about the implementation of Akelius in schools of Kazakhstan.',
+        'video.notSupported': 'Your browser does not support video.',
+        'resources.title': 'Resources',
+        'resources.description': 'Our platform provides a wide range of educational materials and tools for effective teaching and professional development of teachers.',
+        'resources.searchPlaceholder': 'Search...',
+        'resources.filterAll': 'All',
+        'resources.filterPlanning': 'Planning',
+        'resources.filterAssignment': 'Assignment',
+        'resources.filterForum': 'Forum',
+        'resources.viewAll': 'View all resources',
+        'results.title': 'Our results for previous years 2021-2024',
+        'results.description': 'The presented data reflects only our first steps, and in the future we plan to significantly expand the scale of the project.',
+        'results.btnPartnership': 'Partnership opportunities',
+        'results.btnJoin': 'Join the partnership',
+        'results.statChildren': 'children trained',
+        'results.statSchools': 'schools from three regions of Kazakhstan',
+        'results.statTeachers': 'teachers trained',
+        'results.statSupport': 'Customer Support',
+        'expectedResults.title': 'Expected results of Akelius project implementation in regions of Kazakhstan (2025-2027)',
+        'team.title': 'Our team',
+        'team.description': 'Specialists developing the Akelius project in Kazakhstan.',
+        'support.title': 'Support',
+        'support.faqTitle': 'FAQ',
+        'support.faq1.question': 'How to log in to Teacher Hub?',
+        'support.faq1.answer': 'To log in to Teacher Hub, use the credentials provided by the project administrator. If you do not have access, contact the project coordinator in your region.',
+        'support.faq2.question': 'How to upload material?',
+        'support.faq2.answer': 'After logging into Teacher Hub, go to the "Materials" section and click the "Upload" button. Select a file and fill in the necessary information about the material.',
+        'support.faq3.question': 'Who to contact for technical support?',
+        'support.faq3.answer': 'For technical support, contact support@akelius.kz or contact the project coordinator in your region.',
+        'footer.description': 'Akelius contributes to improving the quality of education in various countries around the world',
+        'footer.home': 'Home',
+        'footer.about': 'About',
+        'footer.resources': 'Resources',
+        'footer.news': 'News and events',
+        'footer.results': 'Achievements',
+        'footer.support': 'Support',
+        'footer.contacts': 'Contacts',
+        'footer.subscribe': 'Subscribe',
+        'footer.subscribeDesc': 'Get project news',
+        'footer.emailPlaceholder': 'Email',
+        'footer.subscribeBtn': 'Subscribe'
+      }
+    };
+
+    let currentLang = localStorage.getItem('site_lang') || 'ru';
+
+    function translate() {
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang] && translations[currentLang][key]) {
+          el.textContent = translations[currentLang][key];
+        }
+      });
+
+      const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+      placeholders.forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[currentLang] && translations[currentLang][key]) {
+          el.placeholder = translations[currentLang][key];
+        }
+      });
+    }
+
+    // Инициализация перевода
+    translate();
+
+    // Фильтрация и поиск ресурсов
+    const resourceCards = document.querySelectorAll('.resource-card');
+    const filterButtons = document.querySelectorAll('.resource-filter-btn');
+    const searchInput = document.getElementById('resourceSearch');
+
+    function filterResources() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const activeCategory = document.querySelector('.resource-filter-btn.active')?.dataset.category || 'all';
+
+      resourceCards.forEach(card => {
+        const category = card.dataset.category || '';
+        const title = card.querySelector('.resource-card-title')?.textContent.toLowerCase() || '';
+        const description = card.querySelector('.resource-card-description')?.textContent.toLowerCase() || '';
+        const categoryText = card.querySelector('.resource-card-category')?.textContent.toLowerCase() || '';
+
+        const matchesSearch = !searchTerm || title.includes(searchTerm) || description.includes(searchTerm) || categoryText.includes(searchTerm);
+        const matchesCategory = activeCategory === 'all' || category === activeCategory;
+
+        if (matchesSearch && matchesCategory) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterResources();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', filterResources);
+    }
+
+    // FAQ раскрытие/сворачивание
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const answer = this.querySelector('.faq-answer');
+        const isExpanded = this.classList.contains('expanded');
+        
+        // Закрываем все остальные FAQ
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+          if (otherItem !== this) {
+            otherItem.classList.remove('expanded');
+            const otherAnswer = otherItem.querySelector('.faq-answer');
+            if (otherAnswer) {
+              otherAnswer.style.maxHeight = '0';
+            }
+          }
+        });
+        
+        if (isExpanded) {
+          answer.style.maxHeight = '0';
+          this.classList.remove('expanded');
+        } else {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          this.classList.add('expanded');
+        }
+      });
+    });
+
+    // Форма подписки
+    const subscribeForm = document.getElementById('subscribeForm');
+    const subscribeMessage = document.getElementById('subscribeMessage');
+
+    if (subscribeForm) {
+      subscribeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('subscribeEmail').value;
+        
+        // Здесь можно добавить отправку на сервер
+        subscribeMessage.style.display = 'block';
+        subscribeMessage.style.color = '#10b981';
+        subscribeMessage.textContent = currentLang === 'ru' ? 'Спасибо за подписку!' : 
+                                      currentLang === 'kk' ? 'Жазылғаныңызға рахмет!' : 
+                                      'Thank you for subscribing!';
+        
+        subscribeForm.reset();
+        
+        setTimeout(() => {
+          subscribeMessage.style.display = 'none';
+        }, 3000);
+      });
+    }
+  </script>
+</body>
+</html>

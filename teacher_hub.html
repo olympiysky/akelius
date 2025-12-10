@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Akelius Казахстан — Языковое образование для школ</title>
+
+  <!-- External libs for markdown & editor -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    /* ========== VARIABLES ========== */
+    :root{
+      --blue:#0052d4; --muted:#5a6570; --bg:#f8faff; --card:#fff;
+      --maxw:1250px; --radius:12px; --accent:#ff6b35; --text:#0f1724;
+      --glass: rgba(255,255,255,0.8);
+      --shadow: 0 6px 18px rgba(0,0,0,0.06);
+      --success: #10b981;
+      --danger: #ef4444;
+      --soft-line: #e5eaf6;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    /* ========== RESET ========== */
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:linear-gradient(135deg,#f8faff 0%,#e8f0ff 100%);color:var(--text);line-height:1.45}
+    a{color:var(--blue);text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
+    button{cursor:pointer}
+
+    /* ========== LAYOUT ========== */
+    header{position:fixed;top:0;left:0;right:0;z-index:60;background:linear-gradient(135deg,rgba(255,255,255,0.98),rgba(248,250,255,0.98));backdrop-filter:blur(6px);border-bottom:1px solid var(--soft-line);box-shadow:0 6px 20px rgba(0,82,212,0.06)}
+    .bar{max-width:var(--maxw);margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--blue),#0066ff,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;flex-shrink:0}
+    .brand{margin-left:8px}
+    nav.primary{margin-left:24px;display:flex;gap:10px;align-items:center}
+    nav.primary a{padding:8px 10px;border-radius:8px;font-size:14px;color:var(--muted)}
+    nav.primary a:hover{color:var(--blue);background:linear-gradient(135deg,#dfeeff,#e9f3ff)}
+    .actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+    .btn{background:var(--blue);color:#fff;padding:10px 14px;border-radius:10px;border:none;font-weight:600}
+    .btn.ghost{background:transparent;color:var(--muted);border:1px solid transparent}
+    .small{font-size:13px;color:var(--muted)}
+
+    main{max-width:var(--maxw);margin:90px auto 60px;padding:0 18px}
+
+    /* ========== HERO ========== */
+    .hero{background:linear-gradient(135deg,#d6e7ff 0%,#e0edff 100%);padding:28px;border-radius:12px;display:flex;gap:20px;align-items:center;box-shadow:var(--shadow)}
+    .hero-left{flex:1}
+    .hero-right{flex:0 0 420px}
+    .stats-grid{display:flex;gap:12px;margin-top:16px}
+    .stat-item{background:var(--card);padding:12px;border-radius:10px;flex:1;text-align:center;border:1px solid var(--soft-line)}
+
+    /* ========== TEACHER HUB ========== */
+    .hub-header{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:18px}
+    .hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+    .article-card{background:var(--card);border-radius:12px;padding:14px;border:1px solid var(--soft-line);box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+    .article-card h4{margin:6px 0 8px}
+    .article-card p{font-size:14px;color:#374151}
+    .meta{font-size:12px;color:var(--muted);margin-bottom:8px}
+    .read-more{display:inline-block;margin-top:10px;padding:8px 12px;border-radius:8px;background:linear-gradient(135deg,var(--blue),#0066ff);color:white;font-weight:600}
+
+    /* article view */
+    .article-page{background:var(--card);padding:20px;border-radius:12px;border:1px solid var(--soft-line);box-shadow:var(--shadow)}
+    .article-title{font-size:22px;margin:0 0 6px}
+    .article-meta{font-size:13px;color:var(--muted);margin-bottom:14px}
+    .article-content{padding:6px 0 12px}
+    .rating{display:flex;gap:6px;align-items:center}
+    .stars{display:inline-flex;gap:4px}
+    .star{font-size:20px;cursor:pointer;opacity:0.45;transition:opacity .15s, transform .12s}
+    .star.active{opacity:1;transform:translateY(-2px)}
+    .attachments{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+    .attach-item{padding:8px 10px;border-radius:8px;background:#f3f6ff;border:1px solid #e1e9ff;font-size:13px}
+
+    /* comments */
+    .comments{margin-top:18px}
+    .comment{border-top:1px dashed #eef4ff;padding:12px 0;display:flex;gap:12px}
+    .comment .avatar{width:42px;height:42px;border-radius:50%;background:#e6eefc;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
+    .comment-body{flex:1}
+    .comment-meta{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center}
+    .comment-text{margin-top:6px}
+    .comment-actions{margin-top:8px;display:flex;gap:8px}
+    .reply-box{margin-top:10px}
+    textarea.comment-input{width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px solid var(--soft-line);resize:vertical}
+
+    /* editor modal */
+    .modal{position:fixed;inset:0;background:rgba(10,12,20,0.45);display:flex;align-items:center;justify-content:center;z-index:120;display:none}
+    .modal.show{display:flex}
+    .modal-card{background:white;border-radius:12px;padding:16px;max-width:980px;width:100%;max-height:88vh;overflow:auto;border:1px solid var(--soft-line)}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .form-row{display:flex;gap:12px;align-items:center}
+    .input{padding:10px;border-radius:8px;border:1px solid var(--soft-line);width:100%}
+    .file-input{display:flex;gap:8px;align-items:center}
+
+    /* login */
+    .login-pill{background:#fff;border-radius:10px;padding:6px 8px;border:1px solid var(--soft-line);display:flex;gap:8px;align-items:center}
+
+    /* admin toolbar */
+    .admin-bar{display:flex;gap:8px;align-items:center;margin-top:10px}
+
+    /* responsive tweaks */
+    @media (max-width:900px){
+      .hero-right{display:none}
+      .hero{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header>
+    <div class="bar">
+      <div style="display:flex;align-items:center">
+        <div class="logo">A</div>
+        <div class="brand" style="margin-left:10px">
+          <div style="font-weight:700">Akelius Казахстан</div>
+          <div class="small">Языковое образование для школ</div>
+        </div>
+      </div>
+
+      <nav class="primary" aria-label="Главная навигация">
+        <a href="#about">О проекте</a>
+        <a href="#news">Новости</a>
+        <a href="#teacher-hub" id="hubLink">Teacher Hub</a>
+        <a href="#results">Достижения</a>
+      </nav>
+
+      <div class="actions">
+        <div id="userPill" class="login-pill small" title="Войти/выйти">
+          <span id="userName">Гость</span>
+        </div>
+        <button class="btn" id="loginBtn">Вход</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main>
+    <!-- simple hero -->
+    <section class="hero">
+      <div class="hero-left">
+        <h1 style="margin:0">Akelius — языковое образование для школ</h1>
+        <p class="small" style="margin-top:8px">Цифровые ресурсы, обучение учителей и поддержка школ по всей стране.</p>
+        <div class="stats-grid">
+          <div class="stat-item"><div style="font-weight:700">1900+</div><div class="small">ресурсов</div></div>
+          <div class="stat-item"><div style="font-weight:700">27</div><div class="small">школ</div></div>
+          <div class="stat-item"><div style="font-weight:700">98</div><div class="small">учителей</div></div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div style="background:linear-gradient(135deg,#fff,#f0f7ff);padding:14px;border-radius:12px;border:1px solid var(--soft-line)">
+          <div style="font-weight:700">Teacher Hub</div>
+          <div class="small" style="margin-top:8px">Раздел для публикации методических материалов и обмена опытом. Комментарии доступны только зарегистрированным пользователям.</div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button class="btn" id="openHub">Открыть Hub</button>
+            <button class="btn ghost" id="newArticleBtn">Новая статья</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TEACHER HUB SECTION ========== -->
+    <section id="teacher-hub" style="margin-top:22px">
+      <div class="hub-header">
+        <div>
+          <h2 style="margin:0">Teacher Hub — статьи и обсуждения</h2>
+          <div class="small">Читайте, обсуждайте и публикуйте ресурсы. Комментарии — только для зарегистрированных.</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="searchInput" class="input" placeholder="Поиск по статьям..." style="max-width:340px"/>
+          <select id="filterStatus" class="input" style="max-width:160px">
+            <option value="published">Только опубликованные</option>
+            <option value="all">Все</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- articles list -->
+      <div id="articlesList" class="hub-grid" role="list" aria-live="polite">
+        <!-- JS will render article cards here -->
+      </div>
+    </section>
+
+    <!-- Article page area (rendered when opening an article) -->
+    <section id="articleView" style="margin-top:22px;display:none">
+      <div class="article-page" id="articleCard">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <h3 class="article-title" id="avTitle">Заголовок</h3>
+            <div class="article-meta" id="avMeta">Автор — <span id="avAuthor"></span> | <span id="avDate"></span></div>
+          </div>
+          <div>
+            <div class="rating" title="Оценить статью">
+              <div class="stars" id="stars"></div>
+              <div class="small" id="avgRating">—</div>
+            </div>
+            <div id="articleAdmin" style="margin-top:8px"></div>
+          </div>
+        </div>
+
+        <div class="article-content" id="avContent"></div>
+
+        <div class="attachments" id="avAttachments"></div>
+
+        <!-- comments -->
+        <div class="comments" id="commentsWrap">
+          <h4>Комментарии</h4>
+          <div id="commentsList"></div>
+
+          <!-- add comment -->
+          <div id="commentFormWrap" style="margin-top:12px">
+            <div class="small" id="commentAuthPrompt"></div>
+            <div id="commentForm" style="display:none">
+              <textarea id="commentInput" class="comment-input" placeholder="Написать комментарий..."></textarea>
+              <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+                <label class="file-input small">
+                  <input type="file" id="commentFile" style="display:none"/>
+                  <span style="padding:6px 8px;border-radius:8px;background:#f3f6ff;border:1px solid #e1e9ff">Прикрепить файл</span>
+                </label>
+                <button class="btn" id="sendCommentBtn">Отправить</button>
+                <button class="btn ghost" id="cancelCommentBtn">Отмена</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== MODALS ========== -->
+  <div class="modal" id="modalEditor">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <strong id="modalTitle">Новая статья</strong>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost" id="closeEditor">Закрыть</button>
+          <button class="btn" id="saveArticle">Сохранить</button>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <input id="articleTitle" class="input" placeholder="Заголовок статьи"/>
+        <input id="articleShort" class="input" placeholder="Краткое описание"/>
+        <div style="display:flex;gap:8px;align-items:center">
+          <label class="small">Статус:</label>
+          <select id="articleStatus" class="input" style="max-width:200px">
+            <option value="published">published</option>
+            <option value="draft">draft</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="small">Тело статьи (Markdown)</label>
+          <textarea id="articleMarkdown"></textarea>
+        </div>
+
+        <div class="file-input">
+          <label class="small">Обложка</label>
+          <input type="file" id="coverFile"/>
+        </div>
+
+        <div class="small" style="color:var(--muted)">Примечание: в прототипе все данные хранятся в localStorage. Для реального проекта замените STORAGE вызовы на вызовы API к серверу.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modalLogin">
+    <div class="modal-card">
+      <div class="modal-head"><strong>Вход</strong><button class="btn ghost" id="closeLogin">Закрыть</button></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <input id="loginName" class="input" placeholder="Имя (введите 'admin' для модерации)"/>
+        <button class="btn" id="doLogin">Войти</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SCRIPTS (frontend logic) ========== -->
+  <script>
+    /****************************************************************
+     * Прототип Teacher Hub: клиентская логика (localStorage-backed)
+     * - статьи, комментарии и рейтинги хранятся в localStorage
+     * - для продакшна заменить на API вызовы к бекенду
+     ****************************************************************/
+
+    /* ---------- Utilities ---------- */
+    const uid = (n=8) => Math.random().toString(36).slice(2, 2+n);
+    const now = () => new Date().toISOString();
+    const formatDate = (iso) => new Date(iso).toLocaleString('ru-RU', {dateStyle:'medium', timeStyle:'short'});
+
+    /* ---------- Storage keys ---------- */
+    const KEY_ARTICLES = 'hub_articles_v1';
+    const KEY_COMMENTS = 'hub_comments_v1';
+    const KEY_RATINGS = 'hub_ratings_v1';
+    const KEY_USER = 'hub_user_v1';
+
+    /* ---------- Mock starter data (only if empty) ---------- */
+    function ensureSeed(){
+      if(!localStorage.getItem(KEY_ARTICLES)){
+        const seed = [
+          { id:'a-'+uid(6), title:'Методика 1: Коммуникативный подход', short:'Краткое описание методики, советы и примеры уроков.', content:'# Коммуникативный подход\n\nОписание и примеры...', author:'Akelius', created_at: now(), status:'published', cover:null },
+          { id:'a-'+uid(6), title:'Использование цифровых ресурсов в классе', short:'Как интегрировать интерактивные задания.', content:'# Цифровые ресурсы\n\n- План урока\n- Материалы\n', author:'Akelius', created_at: now(), status:'published', cover:null }
+        ];
+        localStorage.setItem(KEY_ARTICLES, JSON.stringify(seed));
+        localStorage.setItem(KEY_COMMENTS, JSON.stringify([]));
+        localStorage.setItem(KEY_RATINGS, JSON.stringify({}));
+      }
+    }
+    ensureSeed();
+
+    /* ---------- Basic auth (prototype) ---------- */
+    let currentUser = JSON.parse(localStorage.getItem(KEY_USER) || 'null');
+    const userNameEl = document.getElementById('userName');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginModal = document.getElementById('modalLogin');
+    const openHubBtn = document.getElementById('openHub');
+    const hubLink = document.getElementById('hubLink');
+
+    function renderUser(){
+      if(currentUser){
+        userNameEl.textContent = currentUser.name + (currentUser.isAdmin ? ' (admin)' : '');
+        loginBtn.textContent = 'Выход';
+      } else {
+        userNameEl.textContent = 'Гость';
+        loginBtn.textContent = 'Вход';
+      }
+    }
+    renderUser();
+
+    loginBtn.addEventListener('click', () => {
+      if(currentUser){
+        // Logout
+        currentUser = null;
+        localStorage.removeItem(KEY_USER);
+        renderUser();
+        alert('Вы вышли');
+      } else {
+        loginModal.classList.add('show');
+      }
+    });
+    document.getElementById('closeLogin').addEventListener('click', () => loginModal.classList.remove('show'));
+    document.getElementById('doLogin').addEventListener('click', () => {
+      const v = document.getElementById('loginName').value.trim();
+      if(!v){ alert('Введите имя'); return; }
+      currentUser = { name: v, id: 'u-'+uid(5), isAdmin: v.toLowerCase() === 'admin' };
+      localStorage.setItem(KEY_USER, JSON.stringify(currentUser));
+      renderUser();
+      loginModal.classList.remove('show');
+      alert('Вход выполнен как ' + v);
+    });
+
+    document.getElementById('userPill').addEventListener('click', () => {
+      if(currentUser){ if(confirm('Выйти?')){ currentUser = null; localStorage.removeItem(KEY_USER); renderUser(); } } else { loginModal.classList.add('show'); }
+    });
+
+    /* ---------- Articles list rendering ---------- */
+    const articlesList = document.getElementById('articlesList');
+    const searchInput = document.getElementById('searchInput');
+    const filterStatus = document.getElementById('filterStatus');
+
+    function loadArticles(){
+      return JSON.parse(localStorage.getItem(KEY_ARTICLES) || '[]');
+    }
+
+    function saveArticles(arr){
+      localStorage.setItem(KEY_ARTICLES, JSON.stringify(arr));
+    }
+
+    function renderArticles(){
+      const q = (searchInput.value || '').toLowerCase();
+      const statusFilter = filterStatus.value;
+      const all = loadArticles().slice().reverse(); // newest first
+
+      const filtered = all.filter(a => {
+        if(statusFilter === 'published' && a.status !== 'published') return false;
+        if(q && !(a.title.toLowerCase().includes(q) || (a.short||'').toLowerCase().includes(q) || (a.content||'').toLowerCase().includes(q))) return false;
+        return true;
+      });
+
+      articlesList.innerHTML = '';
+      if(!filtered.length){ articlesList.innerHTML = '<div class="small">Статей не найдено</div>'; return; }
+
+      filtered.forEach(a => {
+        const el = document.createElement('article');
+        el.className = 'article-card';
+        el.innerHTML = `
+          <div class="meta">${formatDate(a.created_at)} • ${a.author || '—'}</div>
+          <h4>${escapeHtml(a.title)}</h4>
+          <p>${escapeHtml(a.short || '').slice(0,240)}</p>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+            <a href="#" class="read-more" data-id="${a.id}">Читать</a>
+            <div class="small" style="margin-left:auto">${a.status === 'published' ? 'Опубликовано' : 'Черновик'}</div>
+          </div>
+        `;
+        articlesList.appendChild(el);
+      });
+
+      // attach click handlers
+      articlesList.querySelectorAll('.read-more').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = btn.dataset.id;
+          openArticle(id);
+        });
+      });
+    }
+
+    searchInput.addEventListener('input', renderArticles);
+    filterStatus.addEventListener('change', renderArticles);
+
+    /* ---------- Article view ---------- */
+    const articleView = document.getElementById('articleView');
+    const avTitle = document.getElementById('avTitle');
+    const avAuthor = document.getElementById('avAuthor');
+    const avDate = document.getElementById('avDate');
+    const avContent = document.getElementById('avContent');
+    const avAttachments = document.getElementById('avAttachments');
+    const commentsList = document.getElementById('commentsList');
+    const commentFormWrap = document.getElementById('commentFormWrap');
+    const commentForm = document.getElementById('commentForm');
+    const commentAuthPrompt = document.getElementById('commentAuthPrompt');
+    const commentInput = document.getElementById('commentInput');
+    const commentFile = document.getElementById('commentFile');
+
+    let currentArticleId = null;
+
+    function openArticle(id){
+      const art = loadArticles().find(a => a.id === id);
+      if(!art){ alert('Статья не найдена'); return; }
+      currentArticleId = id;
+      document.getElementById('teacher-hub').scrollIntoView({behavior:'smooth'});
+      articleView.style.display = 'block';
+      avTitle.textContent = art.title;
+      avAuthor.textContent = art.author || '—';
+      avDate.textContent = formatDate(art.created_at);
+      // render markdown
+      avContent.innerHTML = marked.parse(art.content || '');
+      // attachments
+      avAttachments.innerHTML = '';
+      if(art.attachments && art.attachments.length){
+        art.attachments.forEach(f => {
+          const a = document.createElement('a');
+          a.href = f.data;
+          a.target = '_blank';
+          a.className = 'attach-item';
+          a.textContent = f.name;
+          avAttachments.appendChild(a);
+        });
+      }
+      renderRatings(); // rating widgets
+      renderComments();
+      // comment form: only for logged-in
+      if(currentUser){
+        commentAuthPrompt.style.display = 'none';
+        commentForm.style.display = 'block';
+      } else {
+        commentAuthPrompt.style.display = 'block';
+        commentAuthPrompt.innerHTML = 'Только зарегистрированные пользователи могут оставлять комментарии. <a href="#" id="openLoginLink">Войти</a>';
+        commentForm.style.display = 'none';
+        document.getElementById('openLoginLink').addEventListener('click', (e) => { e.preventDefault(); loginModal.classList.add('show'); });
+      }
+      // admin area for article (publish/draft/delete)
+      buildArticleAdmin(art);
+    }
+
+    /* ---------- Comments ---------- */
+    function loadComments(){ return JSON.parse(localStorage.getItem(KEY_COMMENTS) || '[]'); }
+    function saveComments(arr){ localStorage.setItem(KEY_COMMENTS, JSON.stringify(arr)); }
+
+    function renderComments(){
+      const all = loadComments().filter(c => c.article_id === currentArticleId).sort((a,b)=> new Date(a.created_at) - new Date(b.created_at));
+      commentsList.innerHTML = '';
+      if(!all.length) commentsList.innerHTML = '<div class="small">Комментариев пока нет</div>';
+
+      all.forEach(c => {
+        // moderation: if comment not approved and current user is not admin and not author, skip
+        if(c.status === 'pending' && !(currentUser && currentUser.isAdmin) && !(currentUser && c.user && currentUser.id === c.user.id)) return;
+
+        const d = document.createElement('div');
+        d.className = 'comment';
+        d.innerHTML = `
+          <div class="avatar">${(c.user && c.user.name ? escapeHtml(c.user.name[0]).toUpperCase() : 'G')}</div>
+          <div class="comment-body">
+            <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+              <div>
+                <strong>${escapeHtml(c.user ? c.user.name : 'Аноним')}</strong>
+                <div class="comment-meta">${formatDate(c.created_at)} ${c.status === 'pending' ? '<span style="color:var(--accent);margin-left:8px">(на модерации)</span>' : ''}</div>
+              </div>
+              <div class="comment-actions" data-id="${c.id}">
+                <button class="btn ghost replyBtn">Ответить</button>
+                ${currentUser && (currentUser.isAdmin || (c.user && currentUser.id === c.user.id)) ? `<button class="btn ghost deleteBtn">Удалить</button>` : ''}
+                ${currentUser && currentUser.isAdmin ? `<button class="btn ghost toggleApprove">${c.status==='published' ? 'Снять' : 'Одобрить'}</button>` : ''}
+              </div>
+            </div>
+            <div class="comment-text">${escapeHtml(c.comment)}</div>
+            ${c.attachment ? `<div style="margin-top:8px"><a class="attach-item" href="${c.attachment.data}" target="_blank">${escapeHtml(c.attachment.name)}</a></div>` : ''}
+          </div>
+        `;
+        commentsList.appendChild(d);
+
+        // hook buttons
+        const replyBtn = d.querySelector('.replyBtn');
+        replyBtn.addEventListener('click', () => {
+          // open small reply box under this comment
+          openReplyBox(c.id, d);
+        });
+
+        const deleteBtn = d.querySelector('.deleteBtn');
+        if(deleteBtn){
+          deleteBtn.addEventListener('click', () => {
+            if(!confirm('Удалить комментарий?')) return;
+            let arr = loadComments();
+            arr = arr.filter(x => x.id !== c.id && x.parent_id !== c.id);
+            saveComments(arr);
+            renderComments();
+          });
+        }
+
+        const toggleBtn = d.querySelector('.toggleApprove');
+        if(toggleBtn){
+          toggleBtn.addEventListener('click', () => {
+            let arr = loadComments();
+            const idx = arr.findIndex(x=>x.id===c.id);
+            if(idx>=0){
+              arr[idx].status = arr[idx].status === 'published' ? 'pending' : 'published';
+              saveComments(arr);
+              renderComments();
+            }
+          });
+        }
+      });
+    }
+
+    function openReplyBox(parentId, commentElem){
+      // prevent multiple
+      if(commentElem.querySelector('.reply-box')) return;
+      const box = document.createElement('div');
+      box.className = 'reply-box';
+      box.innerHTML = `
+        <textarea class="comment-input" placeholder="Ответить..." ></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn sendReply">Отправить</button>
+          <button class="btn ghost cancelReply">Отмена</button>
+        </div>
+      `;
+      commentElem.appendChild(box);
+      box.querySelector('.cancelReply').addEventListener('click', () => { box.remove(); });
+      box.querySelector('.sendReply').addEventListener('click', () => {
+        const text = box.querySelector('textarea').value.trim();
+        if(!text){ alert('Введите текст'); return; }
+        const arr = loadComments();
+        arr.push({
+          id: 'c-'+uid(6),
+          article_id: currentArticleId,
+          user: currentUser || { name: 'Аноним', id: null },
+          comment: text,
+          created_at: now(),
+          parent_id: parentId,
+          attachment: null,
+          status: currentUser && currentUser.isAdmin ? 'published' : 'pending'
+        });
+        saveComments(arr);
+        renderComments();
+      });
+    }
+
+    // add main comment (form)
+    document.getElementById('sendCommentBtn').addEventListener('click', async () => {
+      if(!currentUser){ alert('Войдите, чтобы комментировать'); return; }
+      const text = commentInput.value.trim();
+      if(!text){ alert('Введите текст'); return; }
+      // handle file if selected
+      let attach = null;
+      if(commentFile.files && commentFile.files[0]){
+        const f = commentFile.files[0];
+        if(f.size > 5*1024*1024){ alert('Файл слишком большой (макс 5MB)'); return; }
+        attach = { name: f.name, data: await fileToDataUrl(f) };
+      }
+      const arr = loadComments();
+      arr.push({
+        id: 'c-'+uid(6),
+        article_id: currentArticleId,
+        user: currentUser,
+        comment: text,
+        created_at: now(),
+        parent_id: null,
+        attachment: attach,
+        status: currentUser.isAdmin ? 'published' : 'pending'
+      });
+      saveComments(arr);
+      commentInput.value = '';
+      commentFile.value = '';
+      renderComments();
+      alert(currentUser.isAdmin ? 'Комментарий опубликован' : 'Комментарий отправлен на модерацию');
+    });
+
+    document.getElementById('cancelCommentBtn').addEventListener('click', () => {
+      commentInput.value = '';
+      commentFile.value = '';
+    });
+
+    async function fileToDataUrl(file){
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = () => res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+      });
+    }
+
+    /* ---------- Editor (SimpleMDE) ---------- */
+    const modalEditor = document.getElementById('modalEditor');
+    const newArticleBtn = document.getElementById('newArticleBtn');
+    const closeEditor = document.getElementById('closeEditor');
+    const saveArticleBtn = document.getElementById('saveArticle');
+    const modalTitle = document.getElementById('modalTitle');
+    const articleTitleInput = document.getElementById('articleTitle');
+    const articleShortInput = document.getElementById('articleShort');
+    const articleStatusSelect = document.getElementById('articleStatus');
+    const coverFileInput = document.getElementById('coverFile');
+    const articleMarkdownTextarea = document.getElementById('articleMarkdown');
+    let simplemde = null;
+    let editingArticleId = null;
+
+    function openEditor(editId = null){
+      editingArticleId = editId;
+      modalEditor.classList.add('show');
+      modalTitle.textContent = editId ? 'Редактировать статью' : 'Новая статья';
+      // init editor if not yet
+      if(!simplemde){
+        simplemde = new SimpleMDE({ element: articleMarkdownTextarea, spellChecker:false, status:false, autosave:false });
+      }
+      if(editId){
+        const art = loadArticles().find(a => a.id === editId);
+        if(!art){ alert('Статья не найдена'); return; }
+        articleTitleInput.value = art.title;
+        articleShortInput.value = art.short || '';
+        articleStatusSelect.value = art.status || 'draft';
+        simplemde.value(art.content || '');
+      } else {
+        articleTitleInput.value = '';
+        articleShortInput.value = '';
+        articleStatusSelect.value = 'published';
+        simplemde.value('');
+      }
+    }
+    newArticleBtn.addEventListener('click', () => {
+      if(!currentUser){ alert('Войдите, чтобы создавать статьи'); return; }
+      openEditor();
+    });
+    document.getElementById('openHub').addEventListener('click', () => { document.getElementById('teacher-hub').scrollIntoView({behavior:'smooth'}); });
+    closeEditor.addEventListener('click', () => modalEditor.classList.remove('show'));
+
+    saveArticleBtn.addEventListener('click', async () => {
+      if(!currentUser){ alert('Только авторизованные пользователи могут сохранять статьи'); return; }
+      const title = articleTitleInput.value.trim();
+      if(!title){ alert('Укажите заголовок'); return; }
+      const short = articleShortInput.value.trim();
+      const content = simplemde.value();
+      let cover = null;
+      if(coverFileInput.files && coverFileInput.files[0]){
+        const f = coverFileInput.files[0];
+        if(f.size > 2*1024*1024){ alert('Обложка слишком большая (макс 2MB)'); return; }
+        cover = { name: f.name, data: await fileToDataUrl(f) };
+      }
+      const arr = loadArticles();
+      if(editingArticleId){
+        const idx = arr.findIndex(x=>x.id===editingArticleId);
+        if(idx>=0){
+          arr[idx].title = title;
+          arr[idx].short = short;
+          arr[idx].content = content;
+          arr[idx].status = articleStatusSelect.value;
+          if(cover) arr[idx].cover = cover;
+          arr[idx].updated_at = now();
+        }
+      } else {
+        const newA = {
+          id: 'a-'+uid(6),
+          title, short, content,
+          author: currentUser.name, created_at: now(), status: articleStatusSelect.value,
+          cover: cover, attachments: []
+        };
+        arr.push(newA);
+      }
+      saveArticles(arr);
+      modalEditor.classList.remove('show');
+      renderArticles();
+      alert('Статья сохранена');
+    });
+
+    /* ---------- Ratings ---------- */
+    function loadRatings(){ return JSON.parse(localStorage.getItem(KEY_RATINGS) || '{}'); }
+    function saveRatings(obj){ localStorage.setItem(KEY_RATINGS, JSON.stringify(obj)); }
+
+    function buildRatingStars(articleId){
+      const wrap = document.createElement('div');
+      wrap.className = 'stars';
+      const ratings = loadRatings();
+      const rdata = ratings[articleId] || { sum:0, count:0, byUser: {} };
+      for(let i=1;i<=5;i++){
+        const s = document.createElement('span');
+        s.className = 'star' + (Math.round(rdata.sum / (rdata.count||1)) >= i ? ' active' : '');
+        s.innerHTML = '★';
+        s.title = i + ' из 5';
+        s.addEventListener('click', () => {
+          if(!currentUser){ alert('Войдите, чтобы оценить'); return; }
+          // prevent multiple ratings per user in prototype
+          if(rdata.byUser && rdata.byUser[currentUser.id]){ if(!confirm('Вы уже оценили. Перезаписать?')) return; }
+          // write rating
+          rdata.byUser = rdata.byUser || {};
+          rdata.byUser[currentUser.id] = i;
+          // recompute sum/count
+          const vals = Object.values(rdata.byUser);
+          rdata.sum = vals.reduce((a,b)=>a+b,0);
+          rdata.count = vals.length;
+          ratings[articleId] = rdata;
+          saveRatings(ratings);
+          renderRatings(); // re-render
+        });
+        wrap.appendChild(s);
+      }
+      return wrap;
+    }
+
+    function renderRatings(){
+      const starsWrap = document.getElementById('stars');
+      const avgWrap = document.getElementById('avgRating');
+      starsWrap.innerHTML = '';
+      avgWrap.textContent = '';
+      if(!currentArticleId) return;
+      const ratings = loadRatings();
+      const rdata = ratings[currentArticleId] || { sum:0, count:0 };
+      const avg = rdata.count ? (rdata.sum / rdata.count) : 0;
+      const stars = buildRatingStars(currentArticleId);
+      starsWrap.appendChild(stars);
+      avgWrap.textContent = rdata.count ? ` ${avg.toFixed(1)} (${rdata.count})` : ' ещё нет оценок';
+    }
+
+    /* ---------- Admin controls for article ---------- */
+    function buildArticleAdmin(article){
+      const wrap = document.getElementById('articleAdmin');
+      wrap.innerHTML = '';
+      if(!currentUser || !currentUser.isAdmin) return;
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn ghost';
+      editBtn.textContent = 'Редактировать';
+      editBtn.addEventListener('click', () => openEditor(article.id));
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn ghost';
+      delBtn.textContent = 'Удалить';
+      delBtn.addEventListener('click', () => {
+        if(!confirm('Удалить статью?')) return;
+        let arr = loadArticles();
+        arr = arr.filter(x => x.id !== article.id);
+        saveArticles(arr);
+        articleView.style.display = 'none';
+        renderArticles();
+      });
+
+      wrap.appendChild(editBtn);
+      wrap.appendChild(delBtn);
+    }
+
+    /* ---------- Helpers ---------- */
+    function escapeHtml(s){ if(!s) return ''; return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    /* ---------- Init ---------- */
+    renderArticles();
+
+    // open first article if click anchor in header
+    document.getElementById('hubLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('teacher-hub').scrollIntoView({behavior:'smooth'});
+    });
+
+    // open modal editor by header button (admin)
+    document.getElementById('newArticleBtn').addEventListener('click', (e) => { e.preventDefault(); if(!currentUser){ alert('Войдите'); return; } openEditor(); });
+
+    // Close editor on background click
+    modalEditor.addEventListener('click', (e) => { if(e.target === modalEditor) modalEditor.classList.remove('show'); });
+
+    // close login modal on background click
+    loginModal.addEventListener('click', (e) => { if(e.target === loginModal) loginModal.classList.remove('show'); });
+
+    // Attachments for article (basic: on open article show attachments)
+    // Note: in a production implementation attachments must be uploaded to server and served as urls
+
+    // Quick: allow editing article by double-click on title when admin
+    avTitle.addEventListener('dblclick', () => { if(currentUser && currentUser.isAdmin && currentArticleId) openEditor(currentArticleId); });
+
+    // handle cover and attachments when saving article (already implemented)
+
+    // simple keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape'){
+        document.querySelectorAll('.modal.show').forEach(m => m.classList.remove('show'));
+      }
+    });
+
+    // ensure data persisted and UI kept fresh when localStorage changed externally
+    window.addEventListener('storage', () => { renderArticles(); if(currentArticleId) renderComments(); });
+
+  </script>
+</body>
+</html>

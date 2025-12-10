@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Hub - Akelius Forum</title>
+
+<!-- ToastUI Markdown Editor CSS -->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
+
+<style>
+:root{
+ --blue:#0052d4;--light-blue:#d6e7ff;--muted:#5a6570;--bg:#f8faff;--card:#fff;
+ --maxw:1250px;--radius:12px;
+ --accent:#ff6b35;--accent-light:#ffe0d6;--purple:#7c3aed;--green:#10b981;--orange:#f59e0b;--red:#ef4444;
+ font-family:Inter,system-ui,Arial;
+}
+body{margin:0;background:linear-gradient(135deg, #f8faff 0%, #e8f0ff 100%);color:#0f1724;line-height:1.5;padding-top:70px}
+.container{max-width:var(--maxw);margin:auto;padding:16px 26px;}
+header{background:linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(248,250,255,0.98) 100%);backdrop-filter:blur(10px);border-bottom:2px solid rgba(0,82,212,0.1);box-shadow:0 4px 20px rgba(0,82,212,0.08);position:fixed;top:0;left:0;right:0;z-index:100;width:100%;}
+.header-inner{max-width:var(--maxw);margin:auto;padding:14px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:nowrap;gap:20px;}
+.logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--blue),#0066ff,var(--purple));box-shadow:0 4px 15px rgba(0,82,212,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;flex-shrink:0;transition:all 0.3s;cursor:pointer}
+.logo:hover{transform:scale(1.05) rotate(5deg);box-shadow:0 6px 20px rgba(0,82,212,0.4)}
+.header-nav{display:flex;gap:16px;align-items:center}
+.header-nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:6px 12px;border-radius:8px;transition:all 0.3s}
+.header-nav a:hover{color:var(--blue);background:rgba(0,82,212,0.1)}
+.notification-badge{background:var(--red);color:white;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;position:relative;top:-8px;right:-8px}
+h1,h2,h3{margin:0;color:#0f1724}
+h1{font-size:28px;font-weight:700;margin-bottom:24px;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Карточки */
+.card{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:24px;box-shadow:0 8px 25px rgba(0,82,212,0.1);margin-top:30px;margin-left:-26px;margin-right:-26px;width:calc(100% + 52px);max-width:none;border:1px solid rgba(0,82,212,0.08)}
+.article{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,82,212,0.1);cursor:pointer;transition:all 0.3s;border:2px solid rgba(0,82,212,0.08)}
+.article:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,82,212,0.2);border-color:var(--blue);background:linear-gradient(135deg,white,#f0f7ff)}
+.article h2{font-size:20px;color:var(--blue);margin-bottom:8px;font-weight:600}
+.article-info{font-size:13px;color:var(--muted);margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.article-info a{color:var(--blue);font-weight:500}
+.article-description{font-size:14px;color:#374151;margin-bottom:12px;line-height:1.6}
+.article-meta{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,82,212,0.1)}
+.article-reactions{display:flex;gap:12px;align-items:center}
+.reaction-btn{display:flex;align-items:center;gap:4px;padding:6px 12px;border:1px solid rgba(0,82,212,0.2);border-radius:6px;background:white;cursor:pointer;transition:all 0.3s;font-size:13px}
+.reaction-btn:hover{background:var(--light-blue);border-color:var(--blue)}
+.reaction-btn.liked{background:linear-gradient(135deg,var(--light-blue),#e0edff);border-color:var(--blue);color:var(--blue);font-weight:500}
+.reaction-btn.disliked{background:linear-gradient(135deg,#fee2e2,#fecaca);border-color:var(--red);color:var(--red);font-weight:500}
+.stars{color:#FFD700;cursor:pointer;font-size:16px}
+.star{margin-right:2px;transition:transform 0.2s}
+.star:hover{transform:scale(1.2)}
+
+/* Полная статья */
+.full-article{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:30px;margin-bottom:30px;box-shadow:0 8px 25px rgba(0,82,212,0.1);border:1px solid rgba(0,82,212,0.08)}
+.full-article-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.full-article a{color:var(--blue);text-decoration:none;font-weight:500;display:inline-block;margin-bottom:20px;transition:all 0.3s}
+.full-article a:hover{color:#003d9e;transform:translateX(-4px)}
+.full-article h2{font-size:24px;color:#0f1724;margin-bottom:16px;font-weight:700}
+.article-author-info{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:12px;background:linear-gradient(135deg,var(--light-blue),#e0edff);border-radius:8px}
+.author-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;flex-shrink:0}
+.author-details{flex:1}
+.author-name{font-weight:600;color:#0f1724;font-size:15px}
+.author-title{font-size:13px;color:var(--muted)}
+.author-stats{font-size:12px;color:var(--muted);margin-top:4px}
+.article-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid rgba(0,82,212,0.1)}
+.article-toc{background:linear-gradient(135deg,var(--light-blue),#e0edff);border-radius:8px;padding:16px;margin:20px 0;border-left:4px solid var(--blue)}
+.article-toc h4{font-size:16px;font-weight:700;color:#0f1724;margin-bottom:12px}
+.article-toc ul{list-style:none;padding:0;margin:0}
+.article-toc li{margin-bottom:8px}
+.article-toc a{color:var(--blue);text-decoration:none;font-size:14px;transition:all 0.3s}
+.article-toc a:hover{color:#003d9e;text-decoration:underline}
+.spoiler{background:#f3f4f6;border:1px solid #d1d5db;border-radius:6px;padding:12px;margin:12px 0;cursor:pointer}
+.spoiler-header{font-weight:600;color:var(--muted);font-size:13px;display:flex;align-items:center;gap:8px}
+.spoiler-content{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #d1d5db}
+.spoiler.expanded .spoiler-content{display:block}
+
+/* Комментарии */
+.comment-section{margin-top:30px;padding-top:30px;border-top:2px solid rgba(0,82,212,0.1)}
+.comment-section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.comment-section h3{font-size:20px;font-weight:700;color:#0f1724;margin:0}
+.comment-sort{display:flex;gap:8px}
+.comment-sort button{padding:6px 12px;border:1px solid rgba(0,82,212,0.2);border-radius:6px;background:white;cursor:pointer;font-size:12px;transition:all 0.3s}
+.comment-sort button.active{background:var(--blue);color:white;border-color:var(--blue)}
+.comment{background:white;border:1px solid rgba(0,82,212,0.1);border-radius:8px;padding:16px;margin-bottom:16px;transition:all 0.3s}
+.comment:hover{box-shadow:0 4px 12px rgba(0,82,212,0.1);border-color:var(--blue)}
+.comment.hidden{opacity:0.5;background:#f9fafb}
+.comment-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.comment-author{display:flex;align-items:center;gap:8px}
+.comment-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:12px;flex-shrink:0}
+.comment-meta{flex:1}
+.comment-author-name{font-weight:600;color:#0f1724;font-size:14px}
+.comment-date{font-size:12px;color:var(--muted)}
+.comment-actions{display:flex;gap:8px}
+.comment-action-btn{padding:4px 8px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-size:12px;border-radius:4px;transition:all 0.3s}
+.comment-action-btn:hover{background:rgba(0,82,212,0.1);color:var(--blue)}
+.comment-text{font-size:14px;color:#374151;line-height:1.6;margin-bottom:12px}
+.comment-quote{background:#f9fafb;border-left:3px solid var(--blue);padding:12px;margin:12px 0;border-radius:4px;font-size:13px;color:var(--muted)}
+.comment-quote-author{font-weight:600;color:var(--blue);margin-bottom:4px}
+.comment-reactions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,82,212,0.1)}
+.comment-reply-form{display:none;margin-top:16px;padding-top:16px;border-top:1px solid rgba(0,82,212,0.1)}
+.comment-reply-form.active{display:block}
+.comment-nested{margin-left:32px;margin-top:12px;border-left:3px solid var(--light-blue);padding-left:16px}
+.comment-nested .comment{margin-bottom:12px}
+
+/* Профиль */
+.profile-page{display:none}
+.profile-page.active{display:block}
+.profile-header{background:linear-gradient(135deg,var(--blue),var(--purple));border-radius:12px;padding:40px;color:white;margin-bottom:24px}
+.profile-header-content{display:flex;align-items:center;gap:24px}
+.profile-avatar-large{width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.2);border:4px solid white;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;flex-shrink:0}
+.profile-info h2{font-size:28px;font-weight:700;margin-bottom:8px}
+.profile-title{font-size:16px;opacity:0.9;margin-bottom:12px}
+.profile-stats{display:flex;gap:24px;margin-top:16px}
+.profile-stat{text-align:center}
+.profile-stat-number{font-size:24px;font-weight:700;display:block}
+.profile-stat-label{font-size:13px;opacity:0.8}
+.profile-content{display:grid;grid-template-columns:1fr 300px;gap:24px}
+.profile-posts{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:24px;box-shadow:0 8px 25px rgba(0,82,212,0.1);border:1px solid rgba(0,82,212,0.08)}
+.profile-sidebar{display:flex;flex-direction:column;gap:16px}
+.profile-card{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:20px;box-shadow:0 8px 25px rgba(0,82,212,0.1);border:1px solid rgba(0,82,212,0.08)}
+.profile-card h3{font-size:16px;font-weight:700;color:#0f1724;margin-bottom:12px}
+.profile-bio{font-size:14px;color:#374151;line-height:1.6}
+
+/* Уведомления */
+.notifications-panel{position:fixed;top:70px;right:20px;width:400px;max-height:500px;background:white;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.2);z-index:99;display:none;overflow-y:auto}
+.notifications-panel.active{display:block}
+.notification-item{padding:16px;border-bottom:1px solid rgba(0,82,212,0.1);cursor:pointer;transition:all 0.3s}
+.notification-item:hover{background:var(--light-blue)}
+.notification-item.unread{background:rgba(0,82,212,0.05);border-left:4px solid var(--blue)}
+.notification-text{font-size:14px;color:#374151;margin-bottom:4px}
+.notification-time{font-size:12px;color:var(--muted)}
+
+/* Поиск */
+.search-bar{display:flex;margin-bottom:24px;gap:8px}
+.search-bar input[type="text"]{flex:1;padding:12px 16px;font-size:14px;border:2px solid rgba(0,82,212,0.2);border-radius:8px;outline:none;transition:all 0.3s;background:white}
+.search-bar input[type="text"]:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,82,212,0.1)}
+
+/* Кнопки */
+.btn{padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-weight:500;font-size:14px;transition:all 0.3s;box-shadow:0 4px 15px rgba(0,82,212,0.3)}
+.btn-primary{background:linear-gradient(135deg,var(--blue),#0066ff);color:white}
+.btn-primary:hover{background:linear-gradient(135deg,#003d9e,#0052d4);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,82,212,0.4)}
+.btn-success{background:linear-gradient(135deg,#10b981,#059669);color:white}
+.btn-success:hover{background:linear-gradient(135deg,#059669,#047857);transform:translateY(-2px)}
+.btn-danger{background:linear-gradient(135deg,var(--red),#dc2626);color:white}
+.btn-danger:hover{background:linear-gradient(135deg,#dc2626,#b91c1c);transform:translateY(-2px)}
+.btn-secondary{background:white;color:var(--blue);border:2px solid var(--blue)}
+.btn-secondary:hover{background:var(--light-blue)}
+.new-article-btn{padding:12px 24px;background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:8px;cursor:pointer;margin-bottom:24px;font-weight:500;font-size:14px;transition:all 0.3s;box-shadow:0 4px 15px rgba(16,185,129,0.3)}
+.new-article-btn:hover{background:linear-gradient(135deg,#059669,#047857);transform:translateY(-2px);box-shadow:0 6px 20px rgba(16,185,129,0.4)}
+.new-article-form{background:linear-gradient(135deg,white 0%,#fafbff 100%);border-radius:12px;padding:30px;box-shadow:0 8px 25px rgba(0,82,212,0.1);margin-bottom:30px;border:1px solid rgba(0,82,212,0.08)}
+.new-article-form input,.new-article-form select{width:100%;padding:12px;margin-top:12px;margin-bottom:12px;border:2px solid rgba(0,82,212,0.2);border-radius:8px;font-size:14px;font-family:inherit;transition:all 0.3s;background:white}
+.new-article-form input:focus,.new-article-form select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,82,212,0.1)}
+.tag{background:linear-gradient(135deg,var(--light-blue),#e0edff);padding:4px 10px;border-radius:6px;margin-right:6px;font-size:12px;color:var(--blue);font-weight:500;border:1px solid rgba(0,82,212,0.2);display:inline-block;margin-bottom:4px}
+.subscribe-btn{padding:8px 16px;border:2px solid var(--blue);background:white;color:var(--blue);border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.3s}
+.subscribe-btn:hover{background:var(--blue);color:white}
+.subscribe-btn.subscribed{background:var(--blue);color:white}
+
+/* Markdown editor */
+#editor, #newEditor, #replyEditor{margin-top:20px;border:2px solid rgba(0,82,212,0.2);border-radius:8px;overflow:hidden}
+
+a{color:var(--blue);text-decoration:none;transition:color 0.3s}
+a:hover{color:#003d9e;text-decoration:underline}
+
+@media (max-width:768px){
+ .profile-content{grid-template-columns:1fr}
+ .comment-nested{margin-left:16px}
+ .notifications-panel{width:calc(100% - 40px);right:20px;left:20px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="header-inner">
+   <a href="#" onclick="showHome();return false" style="display:flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none;color:inherit">
+     <div class="logo">A</div>
+     <div>
+       <div style="font-weight:700;font-size:15px;white-space:nowrap">Akelius Казахстан</div>
+       <div style="font-size:11px;white-space:nowrap;color:var(--muted)">Teacher Hub</div>
+     </div>
+   </a>
+   <div class="header-nav">
+     <a href="#" onclick="showHome();return false">Главная</a>
+     <a href="#" onclick="showNotifications();return false">Уведомления <span id="notificationCount" class="notification-badge" style="display:none">0</span></a>
+     <a href="#" onclick="showProfile('current');return false">Профиль</a>
+   </div>
+ </div>
+</header>
+
+<div id="notificationsPanel" class="notifications-panel"></div>
+
+<div class="container">
+<div id="homePage">
+<h1>Teacher Hub</h1>
+
+<div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Поиск статей..." onkeyup="if(event.key==='Enter') searchArticles()">
+    <button class="btn btn-primary" onclick="searchArticles()">Найти</button>
+</div>
+
+<button class="new-article-btn" onclick="showNewArticleForm()">Создать новую статью</button>
+
+<div id="newArticleForm" class="new-article-form" style="display:none;">
+    <input type="text" id="newTitle" placeholder="Заголовок статьи">
+    <input type="text" id="newAuthor" placeholder="Автор (username)">
+    <input type="text" id="newCategories" placeholder="Категории (через запятую)">
+    <input type="text" id="newTags" placeholder="Теги (через запятую)">
+    <div id="newEditor"></div>
+    <label style="margin-top:12px;display:block">
+        <input type="checkbox" id="requireModeration"> Требуется модерация
+    </label>
+    <button class="btn btn-primary" onclick="addNewArticle()">Добавить статью</button>
+</div>
+
+<div id="articleList"></div>
+</div>
+
+<div id="fullArticle" class="full-article" style="display:none;">
+    <a href="#" onclick="backToList();return false">← Назад к списку</a>
+    <div class="full-article-header">
+        <div>
+            <h2 id="fullTitle"></h2>
+            <div class="article-info" id="fullInfo"></div>
+        </div>
+        <button id="subscribeBtn" class="subscribe-btn" onclick="toggleSubscribe()">Подписаться</button>
+    </div>
+    <div id="articleAuthorInfo"></div>
+    <div id="articleTOC"></div>
+    <div id="fullContent"></div>
+    <div class="article-actions">
+        <div class="article-reactions">
+            <button class="reaction-btn" id="likeBtn" onclick="toggleReaction('like')">
+                <span>👍</span> <span id="likeCount">0</span>
+            </button>
+            <button class="reaction-btn" id="dislikeBtn" onclick="toggleReaction('dislike')">
+                <span>👎</span> <span id="dislikeCount">0</span>
+            </button>
+            <span style="margin-left:12px">Просмотров: <span id="fullViews"></span></span>
+            <span class="stars" id="fullRating"></span>
+        </div>
+    </div>
+
+    <div class="comment-section">
+        <div class="comment-section-header">
+            <h3>Комментарии (<span id="commentCount">0</span>)</h3>
+            <div class="comment-sort">
+                <button class="active" onclick="sortComments('date')">По дате</button>
+                <button onclick="sortComments('popularity')">По популярности</button>
+            </div>
+        </div>
+        <div id="commentsList"></div>
+        <div id="commentForm">
+            <div id="editor"></div>
+            <input type="file" id="commentFile" accept="image/*,.pdf,.doc,.docx" style="margin-top:12px">
+            <button class="btn btn-primary" onclick="addComment(null)" style="margin-top:12px">Добавить комментарий</button>
+        </div>
+    </div>
+</div>
+
+<div id="profilePage" class="profile-page"></div>
+</div>
+
+<!-- ToastUI Markdown Editor JS -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<!-- Marked.js для Markdown рендеринга -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+// Текущий пользователь
+const currentUser = {id:'current',username:'Текущий пользователь',avatar:'Т',title:'Учитель',bio:'',posts:0,rating:0};
+
+// Данные пользователей
+const users = {
+    'Иван Иванов':{id:'ivan',username:'Иван Иванов',avatar:'И',title:'Методист',bio:'Опытный педагог с 15-летним стажем',posts:12,rating:4.5},
+    'Мария Петрова':{id:'maria',username:'Мария Петрова',avatar:'М',title:'IT-специалист',bio:'Эксперт по цифровым технологиям в образовании',posts:8,rating:4.8},
+    'current':currentUser
+};
+
+// Данные статей
+let articles = [
+    {
+        id:'1',
+        title:"Эффективное обучение студентов",
+        author:"Иван Иванов",
+        authorId:'ivan',
+        date:"07.12.2025",
+        categories:"Педагогика, Методики",
+        tags:"обучение,методики,студенты",
+        description:"Лучшие практики эффективного преподавания...",
+        content:"**Полный текст статьи** с поддержкой Markdown.\n\n## Раздел 1\n\n- Пункт 1\n- Пункт 2\n\n## Раздел 2\n\n<details>\n<summary>Спойлер: Секретная информация</summary>\n\nСкрытый контент\n\n</details>",
+        views:152,
+        rating:4,
+        likes:12,
+        dislikes:2,
+        subscribers:[],
+        comments:[],
+        status:'published',
+        editHistory:[]
+    },
+    {
+        id:'2',
+        title:"Технологии в образовании",
+        author:"Мария Петрова",
+        authorId:'maria',
+        date:"05.12.2025",
+        categories:"Технологии, Образование",
+        tags:"технологии,цифровизация",
+        description:"Использование современных технологий в обучении...",
+        content:"Пример статьи с *курсивом* и **жирным текстом**.",
+        views:98,
+        rating:3,
+        likes:8,
+        dislikes:1,
+        subscribers:[],
+        comments:[],
+        status:'published',
+        editHistory:[]
+    }
+];
+
+// Уведомления
+let notifications = [];
+
+let currentArticle = null;
+let currentSort = 'date';
+let commentEditors = {};
+
+// Инициализация редакторов
+let commentEditor, newArticleEditor;
+function initEditors(){
+    if(document.querySelector('#editor') && !commentEditor){
+        commentEditor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            height: '200px',
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            placeholder: 'Напишите комментарий...'
+        });
+    }
+    if(document.querySelector('#newEditor') && !newArticleEditor){
+        newArticleEditor = new toastui.Editor({
+            el: document.querySelector('#newEditor'),
+            height: '400px',
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            placeholder: 'Текст статьи...',
+            toolbarItems: [
+                ['heading', 'bold', 'italic', 'strike'],
+                ['hr', 'quote'],
+                ['ul', 'ol', 'task', 'indent', 'outdent'],
+                ['table', 'image', 'link'],
+                ['code', 'codeblock'],
+                ['scrollSync']
+            ]
+        });
+    }
+}
+
+// Список статей
+function renderArticles() {
+    const list=document.getElementById('articleList');
+    list.innerHTML='';
+    articles.filter(a=>a.status==='published').forEach((article,index)=>{
+        const articleIndex = articles.indexOf(article);
+        const div=document.createElement('div');
+        div.className='article';
+        div.onclick=()=>openArticle(articleIndex);
+        const tags = article.categories.split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('');
+        const user = users[article.authorId] || users[article.author];
+        div.innerHTML=`<h2>${article.title}</h2>
+        <div class="article-info">
+            <a href="#" onclick="event.stopPropagation();showProfile('${article.authorId}');return false">${user.avatar}</a>
+            <span>Автор: <a href="#" onclick="event.stopPropagation();showProfile('${article.authorId}');return false">${article.author}</a></span>
+            <span>Дата: ${article.date}</span>
+            <span>Категории: ${tags}</span>
+        </div>
+        <div class="article-description">${article.description}</div>
+        <div class="article-meta">
+            <div class="article-reactions">
+                <span>👍 ${article.likes || 0}</span>
+                <span>👎 ${article.dislikes || 0}</span>
+                <span>Просмотров: ${article.views}</span>
+            </div>
+            <span class="stars">${'★'.repeat(article.rating)+'☆'.repeat(5-article.rating)}</span>
+        </div>`;
+        list.appendChild(div);
+    });
+}
+
+// Открыть статью
+function openArticle(index){
+    currentArticle=articles[index];
+    currentArticle.views++;
+    document.getElementById('fullTitle').innerText=currentArticle.title;
+    const tags = currentArticle.categories.split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('');
+    const user = users[currentArticle.authorId] || users[currentArticle.author];
+    document.getElementById('fullInfo').innerHTML=`Автор: <a href="#" onclick="showProfile('${currentArticle.authorId}');return false">${currentArticle.author}</a> | Дата: ${currentArticle.date} | Категории: ${tags}`;
+    
+    // Информация об авторе
+    document.getElementById('articleAuthorInfo').innerHTML=`
+        <div class="article-author-info">
+            <div class="author-avatar">${user.avatar}</div>
+            <div class="author-details">
+                <div class="author-name">${user.username}</div>
+                <div class="author-title">${user.title}</div>
+                <div class="author-stats">Постов: ${user.posts} | Рейтинг: ${user.rating}★</div>
+            </div>
+        </div>
+    `;
+    
+    // TOC
+    const toc = generateTOC(currentArticle.content);
+    if(toc){
+        document.getElementById('articleTOC').innerHTML=toc;
+    } else {
+        document.getElementById('articleTOC').innerHTML='';
+    }
+    
+    // Контент с обработкой спойлеров
+    let content = marked.parse(currentArticle.content);
+    content = processSpoilers(content);
+    document.getElementById('fullContent').innerHTML=content;
+    
+    document.getElementById('fullViews').innerText=currentArticle.views;
+    document.getElementById('likeCount').innerText=currentArticle.likes || 0;
+    document.getElementById('dislikeCount').innerText=currentArticle.dislikes || 0;
+    
+    // Подписка
+    const isSubscribed = currentArticle.subscribers.includes(currentUser.id);
+    const subBtn = document.getElementById('subscribeBtn');
+    subBtn.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
+    subBtn.className = isSubscribed ? 'subscribe-btn subscribed' : 'subscribe-btn';
+    
+    renderRating();
+    renderComments();
+    document.getElementById('homePage').style.display='none';
+    document.getElementById('fullArticle').style.display='block';
+    document.getElementById('newArticleForm').style.display='none';
+    document.getElementById('profilePage').style.display='none';
+    initEditors();
+}
+
+// Генерация TOC
+function generateTOC(content){
+    const lines = content.split('\n');
+    const headings = [];
+    lines.forEach((line,index)=>{
+        const match = line.match(/^(#{1,3})\s+(.+)$/);
+        if(match){
+            headings.push({level:match[1].length,text:match[2],id:`heading-${index}`});
+        }
+    });
+    if(headings.length===0) return null;
+    let toc = '<div class="article-toc"><h4>Содержание</h4><ul>';
+    headings.forEach(h=>{
+        toc += `<li><a href="#${h.id}">${h.text}</a></li>`;
+    });
+    toc += '</ul></div>';
+    return toc;
+}
+
+// Обработка спойлеров
+function processSpoilers(content){
+    return content.replace(/<details>([\s\S]*?)<\/details>/g, (match,inner)=>{
+        const summaryMatch = inner.match(/<summary>(.*?)<\/summary>/);
+        const summary = summaryMatch ? summaryMatch[1] : 'Спойлер';
+        const spoilerContent = inner.replace(/<summary>.*?<\/summary>/,'');
+        return `<div class="spoiler" onclick="this.classList.toggle('expanded')">
+            <div class="spoiler-header">▶ ${summary}</div>
+            <div class="spoiler-content">${spoilerContent}</div>
+        </div>`;
+    });
+}
+
+// Вернуться к списку
+function backToList(){
+    document.getElementById('fullArticle').style.display='none';
+    document.getElementById('homePage').style.display='block';
+    document.getElementById('profilePage').style.display='none';
+    renderArticles();
+}
+
+// Показать главную
+function showHome(){
+    document.getElementById('fullArticle').style.display='none';
+    document.getElementById('homePage').style.display='block';
+    document.getElementById('profilePage').style.display='none';
+    document.getElementById('newArticleForm').style.display='none';
+}
+
+// Реакции
+function toggleReaction(type){
+    if(!currentArticle) return;
+    const key = type==='like' ? 'likes' : 'dislikes';
+    const otherKey = type==='like' ? 'dislikes' : 'likes';
+    const btn = document.getElementById(type+'Btn');
+    const otherBtn = document.getElementById(otherKey.slice(0,-1)+'Btn');
+    
+    if(btn.classList.contains(type==='like'?'liked':'disliked')){
+        currentArticle[key]--;
+        btn.classList.remove(type==='like'?'liked':'disliked');
+    } else {
+        currentArticle[key]++;
+        btn.classList.add(type==='like'?'liked':'disliked');
+        if(otherBtn.classList.contains(otherKey.slice(0,-1)+'d')){
+            currentArticle[otherKey]--;
+            otherBtn.classList.remove(otherKey.slice(0,-1)+'d');
+        }
+    }
+    document.getElementById(type+'Count').innerText=currentArticle[key] || 0;
+    document.getElementById(otherKey.slice(0,-1)+'Count').innerText=currentArticle[otherKey] || 0;
+    renderArticles();
+}
+
+// Комментарии
+function addComment(parentId,replyTo){
+    const editor = parentId ? commentEditors[parentId] : commentEditor;
+    if(!editor) return;
+    
+    const text = editor.getMarkdown();
+    if(!text.trim()) return;
+    
+    const fileInput = document.getElementById('commentFile');
+    const file = fileInput && fileInput.files.length>0 ? fileInput.files[0].name : null;
+    
+    const comment = {
+        id: Date.now().toString(),
+        text,
+        file,
+        author:currentUser.username,
+        authorId:currentUser.id,
+        date:new Date().toLocaleString(),
+        status:"published",
+        likes:0,
+        dislikes:0,
+        parentId:parentId || null,
+        replyTo:replyTo || null,
+        replies:[]
+    };
+    
+    if(parentId){
+        const parentComment = findComment(currentArticle.comments, parentId);
+        if(parentComment) parentComment.replies.push(comment);
+    } else {
+        currentArticle.comments.push(comment);
+    }
+    
+    editor.setMarkdown('');
+    if(fileInput) fileInput.value='';
+    if(parentId && commentEditors[parentId]){
+        document.getElementById(`replyForm-${parentId}`).classList.remove('active');
+    }
+    
+    // Уведомление автору поста
+    if(currentArticle.authorId !== currentUser.id){
+        addNotification(currentArticle.authorId, 'Новый комментарий', `${currentUser.username} прокомментировал ваш пост "${currentArticle.title}"`);
+    }
+    
+    // Уведомление при ответе
+    if(replyTo){
+        const replyToComment = findComment(currentArticle.comments, replyTo);
+        if(replyToComment && replyToComment.authorId !== currentUser.id){
+            addNotification(replyToComment.authorId, 'Ответ на комментарий', `${currentUser.username} ответил на ваш комментарий`);
+        }
+    }
+    
+    renderComments();
+    updateCommentCount();
+}
+
+function findComment(comments, id){
+    for(let c of comments){
+        if(c.id === id) return c;
+        if(c.replies){
+            const found = findComment(c.replies, id);
+            if(found) return found;
+        }
+    }
+    return null;
+}
+
+function renderComments(){
+    const container=document.getElementById('commentsList');
+    container.innerHTML='';
+    
+    let commentsToRender = [...currentArticle.comments];
+    
+    // Сортировка
+    if(currentSort === 'popularity'){
+        commentsToRender.sort((a,b)=>(b.likes - b.dislikes) - (a.likes - a.dislikes));
+    } else {
+        commentsToRender.sort((a,b)=>new Date(b.date) - new Date(a.date));
+    }
+    
+    commentsToRender.forEach(c=>{
+        container.appendChild(renderComment(c, 0));
+    });
+    
+    updateCommentCount();
+}
+
+function renderComment(comment, depth){
+    const div=document.createElement('div');
+    div.className='comment' + (comment.status==='hidden' ? ' hidden' : '') + (depth>0 ? ' comment-nested' : '');
+    div.id=`comment-${comment.id}`;
+    
+    const user = users[comment.authorId] || {avatar:comment.author[0],username:comment.author};
+    const quote = comment.replyTo ? findComment(currentArticle.comments, comment.replyTo) : null;
+    
+    let html = `
+        <div class="comment-header">
+            <div class="comment-author">
+                <div class="comment-avatar">${user.avatar}</div>
+                <div class="comment-meta">
+                    <div class="comment-author-name">
+                        <a href="#" onclick="showProfile('${comment.authorId}');return false">${comment.author}</a>
+                    </div>
+                    <div class="comment-date">${comment.date}</div>
+                </div>
+            </div>
+            <div class="comment-actions">
+                <button class="comment-action-btn" onclick="quoteComment('${comment.id}')">Цитировать</button>
+                <button class="comment-action-btn" onclick="replyToComment('${comment.id}')">Ответить</button>
+                <button class="comment-action-btn" onclick="reportComment('${comment.id}')">Пожаловаться</button>
+                ${comment.status==='hidden' ? '<button class="comment-action-btn" onclick="unhideComment(\''+comment.id+'\')">Показать</button>' : ''}
+            </div>
+        </div>
+    `;
+    
+    if(quote){
+        html += `<div class="comment-quote">
+            <div class="comment-quote-author">${quote.author}:</div>
+            ${marked.parse(quote.text.substring(0,100))}
+        </div>`;
+    }
+    
+    html += `<div class="comment-text">${marked.parse(comment.text)}</div>`;
+    
+    if(comment.file){
+        html += `<div style="margin-top:8px;font-size:13px;color:var(--muted)">📎 Файл: ${comment.file}</div>`;
+    }
+    
+    html += `
+        <div class="comment-reactions">
+            <button class="reaction-btn ${comment.userLiked ? 'liked' : ''}" onclick="toggleCommentReaction('${comment.id}','like')">
+                <span>👍</span> <span>${comment.likes || 0}</span>
+            </button>
+            <button class="reaction-btn ${comment.userDisliked ? 'disliked' : ''}" onclick="toggleCommentReaction('${comment.id}','dislike')">
+                <span>👎</span> <span>${comment.dislikes || 0}</span>
+            </button>
+        </div>
+    `;
+    
+    // Форма ответа
+    html += `
+        <div id="replyForm-${comment.id}" class="comment-reply-form">
+            <div id="replyEditor-${comment.id}"></div>
+            <input type="file" id="replyFile-${comment.id}" accept="image/*,.pdf,.doc,.docx" style="margin-top:12px">
+            <button class="btn btn-primary" onclick="addComment('${comment.id}','${comment.id}')" style="margin-top:12px">Ответить</button>
+            <button class="btn btn-secondary" onclick="cancelReply('${comment.id}')" style="margin-top:8px">Отмена</button>
+        </div>
+    `;
+    
+    div.innerHTML = html;
+    
+    // Рендер ответов
+    if(comment.replies && comment.replies.length > 0){
+        const repliesDiv = document.createElement('div');
+        comment.replies.forEach(reply=>{
+            repliesDiv.appendChild(renderComment(reply, depth+1));
+        });
+        div.appendChild(repliesDiv);
+    }
+    
+    return div;
+}
+
+function replyToComment(commentId){
+    const form = document.getElementById(`replyForm-${commentId}`);
+    form.classList.add('active');
+    
+    if(!commentEditors[commentId]){
+        setTimeout(()=>{
+            commentEditors[commentId] = new toastui.Editor({
+                el: document.querySelector(`#replyEditor-${commentId}`),
+                height: '150px',
+                initialEditType: 'wysiwyg',
+                previewStyle: 'vertical',
+                placeholder: 'Напишите ответ...'
+            });
+        }, 100);
+    }
+}
+
+function cancelReply(commentId){
+    document.getElementById(`replyForm-${commentId}`).classList.remove('active');
+    if(commentEditors[commentId]){
+        commentEditors[commentId].setMarkdown('');
+    }
+}
+
+function quoteComment(commentId){
+    const comment = findComment(currentArticle.comments, commentId);
+    if(!comment) return;
+    
+    const quoteText = `> ${comment.text.replace(/\n/g, '\n> ')}\n\n`;
+    if(commentEditor){
+        commentEditor.setMarkdown(quoteText + commentEditor.getMarkdown());
+    }
+}
+
+function toggleCommentReaction(commentId, type){
+    const comment = findComment(currentArticle.comments, commentId);
+    if(!comment) return;
+    
+    const key = type==='like' ? 'likes' : 'dislikes';
+    const userKey = type==='like' ? 'userLiked' : 'userDisliked';
+    const otherUserKey = type==='like' ? 'userDisliked' : 'userLiked';
+    const otherKey = type==='like' ? 'dislikes' : 'likes';
+    
+    if(comment[userKey]){
+        comment[key]--;
+        comment[userKey] = false;
+    } else {
+        comment[key]++;
+        comment[userKey] = true;
+        if(comment[otherUserKey]){
+            comment[otherKey]--;
+            comment[otherUserKey] = false;
+        }
+    }
+    
+    renderComments();
+}
+
+function sortComments(sort){
+    currentSort = sort;
+    document.querySelectorAll('.comment-sort button').forEach(btn=>btn.classList.remove('active'));
+    event.target.classList.add('active');
+    renderComments();
+}
+
+function updateCommentCount(){
+    const count = currentArticle.comments.length + currentArticle.comments.reduce((sum,c)=>sum+(c.replies?.length||0),0);
+    document.getElementById('commentCount').innerText = count;
+}
+
+function reportComment(commentId){
+    if(confirm('Пожаловаться на этот комментарий?')){
+        alert('Жалоба отправлена модераторам');
+        // Здесь можно добавить логику отправки жалобы
+    }
+}
+
+function hideComment(commentId){
+    const comment = findComment(currentArticle.comments, commentId);
+    if(comment) comment.status = 'hidden';
+    renderComments();
+}
+
+function unhideComment(commentId){
+    const comment = findComment(currentArticle.comments, commentId);
+    if(comment) comment.status = 'published';
+    renderComments();
+}
+
+// Рейтинг
+function renderRating(){
+    const container=document.getElementById('fullRating');
+    container.innerHTML='';
+    for(let i=1;i<=5;i++){
+        const star=document.createElement('span');
+        star.className='star';
+        star.innerText=i<=currentArticle.rating?'★':'☆';
+        star.onclick=()=>{currentArticle.rating=i; renderRating(); renderArticles();}
+        container.appendChild(star);
+    }
+}
+
+// Подписка
+function toggleSubscribe(){
+    if(!currentArticle) return;
+    const index = currentArticle.subscribers.indexOf(currentUser.id);
+    if(index > -1){
+        currentArticle.subscribers.splice(index, 1);
+    } else {
+        currentArticle.subscribers.push(currentUser.id);
+        addNotification(currentArticle.authorId, 'Новая подписка', `${currentUser.username} подписался на ваш пост`);
+    }
+    const subBtn = document.getElementById('subscribeBtn');
+    const isSubscribed = currentArticle.subscribers.includes(currentUser.id);
+    subBtn.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
+    subBtn.className = isSubscribed ? 'subscribe-btn subscribed' : 'subscribe-btn';
+}
+
+// Уведомления
+function addNotification(userId, title, text){
+    if(userId === currentUser.id) return; // Не уведомляем себя
+    notifications.push({
+        id: Date.now().toString(),
+        userId,
+        title,
+        text,
+        date: new Date().toLocaleString(),
+        read: false
+    });
+    updateNotificationBadge();
+}
+
+function updateNotificationBadge(){
+    const unread = notifications.filter(n=>!n.read && n.userId===currentUser.id).length;
+    const badge = document.getElementById('notificationCount');
+    if(unread > 0){
+        badge.textContent = unread;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+function showNotifications(){
+    const panel = document.getElementById('notificationsPanel');
+    panel.classList.toggle('active');
+    
+    const userNotifications = notifications.filter(n=>n.userId===currentUser.id).sort((a,b)=>new Date(b.date) - new Date(a.date));
+    panel.innerHTML = '<div style="padding:16px;font-weight:700;border-bottom:1px solid rgba(0,82,212,0.1)">Уведомления</div>';
+    
+    if(userNotifications.length === 0){
+        panel.innerHTML += '<div style="padding:16px;text-align:center;color:var(--muted)">Нет уведомлений</div>';
+    } else {
+        userNotifications.forEach(n=>{
+            const div = document.createElement('div');
+            div.className = 'notification-item' + (n.read ? '' : ' unread');
+            div.onclick = ()=>{n.read=true; updateNotificationBadge(); showNotifications();};
+            div.innerHTML = `
+                <div class="notification-text"><strong>${n.title}</strong><br>${n.text}</div>
+                <div class="notification-time">${n.date}</div>
+            `;
+            panel.appendChild(div);
+        });
+    }
+}
+
+// Профиль
+function showProfile(userId){
+    const user = users[userId] || currentUser;
+    const userArticles = articles.filter(a=>a.authorId===userId && a.status==='published');
+    
+    document.getElementById('profilePage').innerHTML = `
+        <div class="profile-header">
+            <div class="profile-header-content">
+                <div class="profile-avatar-large">${user.avatar}</div>
+                <div class="profile-info">
+                    <h2>${user.username}</h2>
+                    <div class="profile-title">${user.title}</div>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span class="profile-stat-number">${user.posts}</span>
+                            <span class="profile-stat-label">Постов</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="profile-stat-number">${user.rating}</span>
+                            <span class="profile-stat-label">Рейтинг</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-content">
+            <div class="profile-posts">
+                <h3>Посты пользователя</h3>
+                <div id="profileArticles"></div>
+            </div>
+            <div class="profile-sidebar">
+                <div class="profile-card">
+                    <h3>О пользователе</h3>
+                    <div class="profile-bio">${user.bio || 'Информация не указана'}</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const profileArticlesDiv = document.getElementById('profileArticles');
+    if(userArticles.length === 0){
+        profileArticlesDiv.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">Пользователь еще не опубликовал постов</p>';
+    } else {
+        userArticles.forEach(article=>{
+            const div = document.createElement('div');
+            div.className = 'article';
+            div.onclick = ()=>openArticle(articles.indexOf(article));
+            const tags = article.categories.split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('');
+            div.innerHTML = `<h2>${article.title}</h2>
+            <div class="article-info">
+                <span>Дата: ${article.date}</span>
+                <span>Категории: ${tags}</span>
+            </div>
+            <div class="article-description">${article.description}</div>`;
+            profileArticlesDiv.appendChild(div);
+        });
+    }
+    
+    document.getElementById('homePage').style.display='none';
+    document.getElementById('fullArticle').style.display='none';
+    document.getElementById('profilePage').classList.add('active');
+}
+
+// Поиск
+function searchArticles(){
+    const query=document.getElementById('searchInput').value.toLowerCase();
+    const list=document.getElementById('articleList');
+    list.innerHTML='';
+    articles.filter(a=>a.status==='published').forEach((article,index)=>{
+        const articleIndex = articles.indexOf(article);
+        if(article.title.toLowerCase().includes(query) || article.description.toLowerCase().includes(query) || article.categories.toLowerCase().includes(query) || article.tags.toLowerCase().includes(query)){
+            const div=document.createElement('div');
+            div.className='article';
+            div.onclick=()=>openArticle(articleIndex);
+            const tags = article.categories.split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('');
+            const user = users[article.authorId] || users[article.author];
+            div.innerHTML=`<h2>${article.title}</h2>
+            <div class="article-info">
+                <span>Автор: <a href="#" onclick="event.stopPropagation();showProfile('${article.authorId}');return false">${article.author}</a></span>
+                <span>Дата: ${article.date}</span>
+                <span>Категории: ${tags}</span>
+            </div>
+            <div class="article-description">${article.description}</div>
+            <div class="article-meta">
+                <div class="article-reactions">
+                    <span>👍 ${article.likes || 0}</span>
+                    <span>👎 ${article.dislikes || 0}</span>
+                    <span>Просмотров: ${article.views}</span>
+                </div>
+                <span class="stars">${'★'.repeat(article.rating)+'☆'.repeat(5-article.rating)}</span>
+            </div>`;
+            list.appendChild(div);
+        }
+    });
+}
+
+// Создание новой статьи
+function showNewArticleForm(){
+    document.getElementById('newArticleForm').style.display='block';
+    document.getElementById('articleList').style.display='none';
+    document.getElementById('fullArticle').style.display='none';
+    document.getElementById('homePage').style.display='block';
+    document.getElementById('profilePage').style.display='none';
+    setTimeout(initEditors, 100);
+}
+function addNewArticle(){
+    const title = document.getElementById('newTitle').value.trim();
+    const author = document.getElementById('newAuthor').value.trim();
+    const categories = document.getElementById('newCategories').value.trim();
+    const tags = document.getElementById('newTags').value.trim();
+    const content = newArticleEditor.getMarkdown().trim();
+    const requireModeration = document.getElementById('requireModeration').checked;
+    
+    if(title && author && categories && content){
+        const description = content.split('\n')[0].substring(0,100).replace(/[#*`]/g,'')+'...';
+        const authorId = author.toLowerCase().replace(/\s+/g,'');
+        if(!users[authorId]){
+            users[authorId] = {id:authorId,username:author,avatar:author[0],title:'Учитель',bio:'',posts:0,rating:0};
+        }
+        users[authorId].posts++;
+        
+        articles.unshift({
+            id:Date.now().toString(),
+            title,
+            author,
+            authorId,
+            date:new Date().toLocaleDateString(),
+            categories,
+            tags,
+            description,
+            content,
+            views:0,
+            rating:0,
+            likes:0,
+            dislikes:0,
+            subscribers:[],
+            comments:[],
+            status:requireModeration ? 'pending' : 'published',
+            editHistory:[]
+        });
+        
+        newArticleEditor.setMarkdown('');
+        document.getElementById('newTitle').value='';
+        document.getElementById('newAuthor').value='';
+        document.getElementById('newCategories').value='';
+        document.getElementById('newTags').value='';
+        document.getElementById('requireModeration').checked=false;
+        document.getElementById('newArticleForm').style.display='none';
+        document.getElementById('articleList').style.display='block';
+        renderArticles();
+        
+        if(requireModeration){
+            alert('Статья отправлена на модерацию');
+        }
+    } else alert('Заполните все обязательные поля!');
+}
+
+// Инициализация
+renderArticles();
+initEditors();
+updateNotificationBadge();
+
+// Закрытие панели уведомлений при клике вне её
+document.addEventListener('click',(e)=>{
+    const panel = document.getElementById('notificationsPanel');
+    if(panel && !panel.contains(e.target) && !e.target.closest('.header-nav a')){
+        panel.classList.remove('active');
+    }
+});
+</script>
+
+</body>
+</html>
