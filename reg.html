@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Регистрация — Akelius</title>
+  <style>
+    :root {
+      --blue:#0b62c8;
+      --light-blue:#eaf4ff;
+      --muted:#6b7280;
+      --bg:#f4f7fb;
+      --card:#fff;
+      --radius:12px;
+      --maxw:520px;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+    html,body{height:100%}
+    body {
+      margin:0;
+      background:var(--bg);
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:40px 12px;
+      position:relative;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Language Switch */
+    .lang-switch {
+      position:fixed;
+      top:18px;
+      right:18px;
+      display:flex;
+      gap:8px;
+      z-index:30;
+    }
+    .lang-switch button {
+      background:#fff;
+      border:1px solid #e2e8f0;
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .lang-switch button.active {
+      background:var(--blue);
+      color:#fff;
+      box-shadow:0 6px 18px rgba(11,98,200,0.12);
+    }
+
+    /* Form wrapper */
+    .form-wrapper {
+      background:var(--card);
+      width:100%;
+      max-width:var(--maxw);
+      padding:34px;
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(11,98,200,0.06);
+      margin:20px 0;
+    }
+
+    h2 {
+      margin:0 0 6px 0;
+      font-size:22px;
+      color:#0f172a;
+    }
+    .subtitle {
+      margin:0 0 18px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    label {
+      display:block;
+      margin-bottom:6px;
+      color:#1f2937;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+      width:100%;
+      padding:11px 12px;
+      border:1px solid #e6eef6;
+      border-radius:10px;
+      font-size:14px;
+      background:#fbfdff;
+      box-sizing:border-box;
+    }
+    input:focus {
+      outline:none;
+      border-color:var(--blue);
+      box-shadow:0 6px 18px rgba(11,98,200,0.06);
+      background:#fff;
+    }
+
+    /* Grid for name / surname */
+    .grid-2 {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap:20px; /* increased gap */
+      row-gap:14px;
+      align-items:start;
+    }
+
+    .field-group { width:100%; }
+    .field-group input { max-width:100%; }
+
+    @media (max-width:600px){
+      .grid-2 { grid-template-columns:1fr; column-gap:12px; }
+      .form-wrapper { padding:20px; margin:12px; }
+      .lang-switch { position:fixed; top:12px; right:12px; }
+    }
+
+    .label-inline { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .optional { font-size:13px; color:var(--muted); font-weight:500; }
+
+    .strength-wrapper {
+      margin-top:8px;
+      height:8px;
+      background:#eef2f6;
+      border-radius:6px;
+      overflow:hidden;
+    }
+    .strength-bar {
+      height:100%;
+      width:0%;
+      background:#ff6b6b;
+      transition:width .3s ease, background .3s ease;
+    }
+    .strength-text {
+      margin-top:8px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .checkbox {
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-top:16px;
+      font-size:14px;
+      color:#1f2937;
+      line-height:1.4;
+    }
+    .checkbox input { transform:scale(1.14); margin-top:3px; }
+
+    .btn {
+      display:inline-block;
+      width:100%;
+      margin-top:20px;
+      background:var(--blue);
+      color:#fff;
+      padding:12px 14px;
+      border-radius:10px;
+      text-align:center;
+      font-weight:700;
+      font-size:15px;
+      border:none;
+      cursor:pointer;
+      box-shadow:0 8px 20px rgba(11,98,200,0.08);
+    }
+    .btn:active { transform:translateY(1px); }
+
+    .btn-google {
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      margin-top:12px;
+      background:#fff;
+      color:#111;
+      padding:11px 12px;
+      border-radius:10px;
+      border:1px solid #e6eef6;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .bottom {
+      margin-top:16px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    a { color:var(--blue); text-decoration:none; font-weight:700; }
+
+    .note { font-size:13px; color:var(--muted); margin-top:6px; }
+
+  </style>
+</head>
+<body>
+
+  <div class="lang-switch" role="navigation" aria-label="Выбор языка">
+    <button class="lang-btn active" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="kz">KZ</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+
+  <main class="form-wrapper" role="main" aria-labelledby="reg-title">
+    <h2 id="reg-title">Создайте учетную запись</h2>
+    <div class="subtitle">Для доступа к материалам Akelius</div>
+
+    <form id="regForm" autocomplete="on" novalidate>
+      <div class="grid-2">
+        <div class="field-group">
+          <label for="firstName">Имя</label>
+          <input id="firstName" name="firstName" type="text" placeholder="Ваше имя" required>
+        </div>
+
+        <div class="field-group">
+          <label for="lastName">Фамилия</label>
+          <input id="lastName" name="lastName" type="text" placeholder="Ваша фамилия" required>
+        </div>
+      </div>
+
+      <label for="email" style="margin-top:14px">Электронный адрес* <span class="optional"></span></label>
+      <input id="email" name="email" type="email" placeholder="example@mail.com" required>
+
+      <label for="phone" style="margin-top:14px">Номер телефона*</label>
+      <input id="phone" name="phone" type="tel" placeholder="+7 707 123 4567" required>
+
+      <label for="password" style="margin-top:14px">Создайте пароль* <span class="note">Пароль должен содержать не менее 8 символов включая цифры, прописные и строчные буквы</span></label>
+      <input id="password" name="password" type="password" placeholder="Пароль" required>
+
+      <div class="strength-wrapper" aria-hidden="false">
+        <div id="strengthBar" class="strength-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div id="strengthText" class="strength-text" aria-live="polite"></div>
+
+      <label for="password2" style="margin-top:12px">Подтвердите ваш пароль*</label>
+      <input id="password2" name="password2" type="password" placeholder="Повторите пароль" required>
+
+      <div class="checkbox">
+        <input id="agree" name="agree" type="checkbox" required>
+        <label for="agree">Я согласен с <a href="#">Условиями использования</a> и <a href="#">Политикой конфиденциальности</a></label>
+      </div>
+
+      <button id="submitBtn" class="btn" type="submit">Создать аккаунт</button>
+
+      <button type="button" class="btn-google" id="googleAuth">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="" width="18" height="18" aria-hidden="true">
+        Продолжить с учётной записью Google
+      </button>
+
+      <div class="bottom">Уже есть аккаунт? <a href="/login">Войти</a></div>
+    </form>
+  </main>
+
+<script>
+  // Language switch persisted
+  const langBtns = document.querySelectorAll('.lang-btn');
+  const saved = localStorage.getItem('ak_lang') || 'ru';
+  langBtns.forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === saved);
+    b.addEventListener('click', () => {
+      langBtns.forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      localStorage.setItem('ak_lang', b.dataset.lang);
+      document.documentElement.lang = b.dataset.lang === 'kz' ? 'kk' : b.dataset.lang;
+    });
+  });
+  document.documentElement.lang = saved === 'kz' ? 'kk' : saved;
+
+  // Password strength
+  const pwd = document.getElementById('password');
+  const bar = document.getElementById('strengthBar');
+  const text = document.getElementById('strengthText');
+
+  function evaluatePassword(v){
+    let score = 0;
+    if(v.length >= 8) score++;
+    if(/[A-Z]/.test(v)) score++;
+    if(/[a-z]/.test(v)) score++;
+    if(/[0-9]/.test(v)) score++;
+    if(/[^A-Za-z0-9]/.test(v)) score++;
+    return score;
+  }
+
+  pwd.addEventListener('input', () => {
+    const v = pwd.value;
+    const s = evaluatePassword(v);
+    const pct = Math.round((s/5)*100);
+    bar.style.width = pct + '%';
+    bar.setAttribute('aria-valuenow', pct);
+
+    if(s <= 2){
+      bar.style.background = '#ef4444';
+      text.textContent = 'Слабый пароль';
+    } else if(s === 3 || s === 4){
+      bar.style.background = '#f59e0b';
+      text.textContent = 'Средний пароль';
+    } else {
+      bar.style.background = '#10b981';
+      text.textContent = 'Сильный пароль';
+    }
+    if(v.length === 0){ bar.style.width='0%'; text.textContent=''; }
+  });
+
+  // Simple form validation visual
+  const form = document.getElementById('regForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pwd2 = document.getElementById('password2').value;
+    const agree = document.getElementById('agree').checked;
+    if(document.getElementById('password').value !== pwd2){
+      alert('Пароли не совпадают');
+      return;
+    }
+    if(!agree){
+      alert('Необходимо согласиться с условиями');
+      return;
+    }
+    // Here you would send data to backend
+    alert('Форма корректна. (пример) — тут должен быть POST на сервер.');
+  });
+
+  // Google auth placeholder
+  document.getElementById('googleAuth').addEventListener('click', () => {
+    alert('Запустить OAuth2 Google — заглушка. Реализуйте бэкенд-рут /auth/google/');
+  });
+</script>
+
+</body>
+</html>
