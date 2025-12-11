@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вход — Akelius</title>
+  <!doctype html>
+  <html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Вход — Akelius</title>
+    <style>
+      :root {
+        --blue:#0b62c8;
+        --light-blue:#eaf4ff;
+        --muted:#6b7280;
+        --bg:#f4f7fb;
+        --card:#fff;
+        --radius:12px;
+        font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      }
+      html,body{height:100%}
+      body {
+        margin:0;
+        background:var(--bg);
+        display:flex;
+        justify-content:center;
+        align-items:flex-start;
+        padding:0;
+        padding-top:70px; /* пространство для фиксированного header */
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+        min-height:100vh;
+      }
+
+      header{background:linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(248,250,255,0.98) 100%);backdrop-filter:blur(10px);border-bottom:2px solid rgba(0,82,212,0.1);box-shadow:0 4px 20px rgba(0,82,212,0.08);position:fixed;top:0;left:0;right:0;z-index:40;width:100%;}
+      .header-inner{max-width:1400px;margin:0 auto;padding:14px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:nowrap;gap:20px}
+      .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--blue),#0066ff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+      nav{display:flex;gap:16px;flex-shrink:0}
+      nav a{color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:8px}
+      .menu-toggle{display:none;flex-direction:column;gap:4px;background:transparent;border:none;cursor:pointer;padding:8px;z-index:50;outline:none}
+      .menu-toggle span{width:24px;height:2px;background:var(--muted);border-radius:2px}
+      @media (max-width:968px){nav{position:fixed;top:70px;left:0;right:0;background:white;flex-direction:column;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);transform:translateX(-100%);transition:transform 0.3s;z-index:45}nav.active{transform:translateX(0)}.menu-toggle{display:flex}}
+
+      .layout-container{width:100%;max-width:1400px;margin:0 auto;padding:20px;display:grid;place-items:start center}
+
+      .form-wrapper{background:var(--card);width:100%;max-width:420px;padding:14px;border-radius:10px;box-shadow:0 8px 22px rgba(11,98,200,0.06);margin:20px 0 0 0}
+      h2{margin:0 0 6px 0;font-size:18px;color:#0f172a}
+      .subtitle{margin:0 0 12px 0;color:var(--muted);font-size:14px}
+      label{display:block;margin-bottom:6px;color:#1f2937;font-weight:600;font-size:14px}
+      input[type="email"],input[type="password"]{width:100%;padding:10px;border:1px solid #e6eef6;border-radius:10px;font-size:14px;background:#fbfdff;box-sizing:border-box}
+      .checkbox{display:flex;gap:10px;align-items:center;margin-top:12px;font-size:14px}
+      .btn{display:inline-block;width:100%;margin-top:14px;background:var(--blue);color:#fff;padding:12px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+      .btn-google{display:inline-flex;gap:10px;align-items:center;justify-content:center;width:100%;margin-top:10px;background:#fff;color:#111;padding:10px;border-radius:10px;border:1px solid #e6eef6;font-weight:700}
+      .bottom{text-align:center;margin-top:12px;color:var(--muted);font-size:14px}
+      a{color:var(--blue);text-decoration:none;font-weight:700}
+      @media (max-width:420px){.form-wrapper{padding:12px;border-radius:10px}}
+    </style>
+  </head>
+  <body>
+
+    <header aria-label="Главное меню">
+      <div class="header-inner">
+        <a href="#home" style="display:flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none;color:inherit">
+          <div class="logo">A</div>
+          <div>
+            <div style="font-weight:700;font-size:15px;white-space:nowrap">Akelius Казахстан</div>
+            <div class="small" style="font-size:11px;white-space:nowrap">Языковое образование для школ</div>
+          </div>
+        </a>
+
+        <button class="menu-toggle" aria-label="Меню" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="mainNav">
+          <a href="#about">О проекте</a>
+          <a href="#news">Новости и события</a>
+          <a href="#resources">Ресурсы</a>
+        </nav>
+
+        <nav class="lang" aria-label="Выбор языка">
+          <a href="/login" class="btn-login">Вход</a>
+          <span style="color:#d0d7de;margin:0 4px">|</span>
+          <button type="button" data-lang="ru" class="active">RU</button>
+          <button type="button" data-lang="kk">KZ</button>
+          <button type="button" data-lang="en">EN</button>
+        </nav>
+      </div>
+    </header>
+
+    <div class="layout-container">
+      <main class="form-wrapper" role="main" aria-labelledby="login-title">
+        <h2 id="login-title">Вход в личный кабинет</h2>
+        <div class="subtitle">Для доступа к материалам Akelius</div>
+
+        <form id="loginForm" autocomplete="on" novalidate>
+          <label for="loginEmail">Электронный адрес</label>
+          <input id="loginEmail" name="email" type="email" placeholder="example@mail.com" required>
+
+          <label for="loginPass" style="margin-top:10px">Пароль</label>
+          <input id="loginPass" name="password" type="password" placeholder="Пароль" required>
+
+          <div class="checkbox">
+            <label style="display:flex;align-items:center;gap:8px;font-weight:500"><input type="checkbox" id="remember"> Запомнить</label>
+            <div style="margin-left:auto"><a href="#">Забыли пароль?</a></div>
+          </div>
+
+          <button class="btn" type="submit">Войти</button>
+
+          <button type="button" class="btn-google" id="googleAuth">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="" width="18" height="18" aria-hidden="true">Продолжить с Google
+          </button>
+
+          <div class="bottom">Нет аккаунта? <a href="reg.html">Создать</a></div>
+        </form>
+      </main>
+    </div>
+
+    <script>
+      // Mobile menu toggle (same behavior as reg.html)
+      const menuToggle = document.getElementById('menuToggle');
+      const mainNav = document.getElementById('mainNav');
+      if (menuToggle && mainNav) {
+        menuToggle.addEventListener('click', (e) => { e.stopPropagation(); menuToggle.classList.toggle('active'); mainNav.classList.toggle('active'); });
+        mainNav.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { menuToggle.classList.remove('active'); mainNav.classList.remove('active'); }); });
+        document.addEventListener('click', (e) => { if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) { menuToggle.classList.remove('active'); mainNav.classList.remove('active'); } });
+      }
+
+      // Login form placeholder
+      const loginForm = document.getElementById('loginForm');
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const pass = document.getElementById('loginPass').value;
+        if(!email || !pass){ alert('Пожалуйста, заполните все поля'); return; }
+        alert('Форма отправлена (заглушка). Реализуйте POST на сервер.');
+      });
+
+      document.getElementById('googleAuth').addEventListener('click', () => {
+        alert('Запустить OAuth2 Google — заглушка. Реализуйте бэкенд-рут /auth/google/');
+      });
+
+      // Language buttons behavior
+      const langBtns = document.querySelectorAll('.lang button');
+      if(langBtns.length){
+        const saved = localStorage.getItem('site_lang') || 'ru';
+        function setActive(code){
+          langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === code));
+          localStorage.setItem('site_lang', code);
+          document.documentElement.lang = (code === 'kk') ? 'kk' : code;
+        }
+        langBtns.forEach(b => b.addEventListener('click', ()=> setActive(b.dataset.lang)));
+        setActive(saved);
+      }
+    </script>
+
+  </body>
+  </html>

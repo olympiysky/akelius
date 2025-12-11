@@ -22,10 +22,109 @@
       display:flex;
       justify-content:center;
       align-items:flex-start;
-      padding:40px 12px;
+      padding:0;
+      padding-top:70px; /* пространство для фиксированного header */
+      overflow:hidden; /* отключаем вертикальный скролл страницы */
       position:relative;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+    }
+
+    /* Header styles copied from akelius_site_with.html */
+    header{background:linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(248,250,255,0.98) 100%);backdrop-filter:blur(10px);border-bottom:2px solid rgba(0,82,212,0.1);box-shadow:0 4px 20px rgba(0,82,212,0.08);position:fixed;top:0;left:0;right:0;z-index:40;width:100%;}
+    .header-inner{max-width:1400px;margin:auto;padding:14px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:nowrap;gap:20px}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--blue),#0066ff);box-shadow:0 4px 15px rgba(0,82,212,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;flex-shrink:0}
+    nav{display:flex;gap:16px;flex-shrink:0}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:6px 12px;border-radius:8px;white-space:nowrap;transition:all 0.3s;position:relative}
+    nav a:hover{color:var(--blue);background:linear-gradient(135deg, #d0e4ff, #e0edff);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,82,212,0.15)}
+    .menu-toggle{display:none;flex-direction:column;gap:4px;background:transparent;border:none;cursor:pointer;padding:8px;z-index:50;outline:none}
+    .menu-toggle span{width:24px;height:2px;background:var(--muted);transition:all 0.3s;border-radius:2px}
+    .menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}
+    .menu-toggle.active span:nth-child(2){opacity:0}
+    .menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px)}
+    @media (max-width:968px){
+      nav{position:fixed;top:70px;left:0;right:0;background:white;flex-direction:column;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);transform:translateX(-100%);transition:transform 0.3s;z-index:45;max-height:calc(100vh - 70px);overflow-y:auto;visibility:hidden}
+      nav.active{transform:translateX(0);visibility:visible}
+      nav a{padding:12px 16px;border-bottom:1px solid #d0e4ff}
+      .menu-toggle{display:flex}
+    }
+    nav.lang{margin-left:24px;display:flex;gap:12px;flex-shrink:0;align-items:center;font-size:13px}
+    nav.lang button{border:1px solid rgba(0,82,212,0.2);background:transparent;color:var(--muted);padding:4px 10px;border-radius:6px;font-size:13px;line-height:1;cursor:pointer;white-space:nowrap;text-decoration:none;font-weight:400;transition:all 0.3s}
+    nav.lang button.active{color:var(--blue);font-weight:400;border-color:var(--blue)}
+    nav.lang button:hover{color:var(--blue);border-color:var(--blue)}
+
+    /* Layout container */
+    .layout-container {
+      display:grid;
+      grid-template-columns:1fr; /* single column now, form centered */
+      place-items:center; /* center contents both vertically and horizontally */
+      width:100%;
+      height:calc(100vh - 70px); /* фиксированная высота контейнера */
+      max-width:1400px;
+      margin:0 auto;
+      overflow:hidden;
+    }
+
+    /* Left side - Image */
+    .left-side {
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding:40px;
+      position:relative;
+    }
+
+    .image-container {
+      width:100%;
+      max-width:260px;
+      margin-top:8px; /* ещё меньше отступ */
+      border-radius:8px;
+      overflow:hidden;
+      background:linear-gradient(135deg, #e0edff 0%, #d6e7ff 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:120px; /* ещё меньше высоты */
+      box-shadow:0 6px 16px rgba(11,98,200,0.05);
+    }
+
+    .image-container img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .white-space {
+      flex:1;
+      width:100%;
+      background:#fff;
+      min-height:8px;
+    }
+
+    /* Right side - Form */
+    .right-side {
+      background:var(--bg);
+      display:flex;
+      align-items:center; /* центрируем по вертикали */
+      justify-content:center; /* центрируем по горизонтали */
+      padding:6px 10px; /* ещё меньше padding */
+      overflow:auto; /* внутренний скролл, если содержимое не влезает */
+      width:100%;
+    }
+
+    @media (max-width:968px){
+      .layout-container {
+        grid-template-columns:1fr;
+      }
+      .left-side {
+        display:none;
+      }
+      .right-side {
+        padding:20px 12px;
+      }
     }
 
     /* Language Switch */
@@ -57,22 +156,24 @@
     .form-wrapper {
       background:var(--card);
       width:100%;
-      max-width:var(--maxw);
-      padding:34px;
-      border-radius:14px;
-      box-shadow:0 10px 30px rgba(11,98,200,0.06);
-      margin:20px 0;
+      max-width:420px; /* немного шире по запросу */
+      padding:12px; /* немного больше внутреннего отступа */
+      border-radius:8px;
+      box-shadow:0 6px 18px rgba(11,98,200,0.05);
+      margin:22px 0 0 0; /* сдвигаем форму чуть ниже под меню */
+      max-height:calc(100vh - 140px); /* оставить запас по высоте */
+      overflow:auto;
     }
 
     h2 {
-      margin:0 0 6px 0;
-      font-size:22px;
+      margin:0 0 4px 0;
+      font-size:15px;
       color:#0f172a;
     }
     .subtitle {
-      margin:0 0 18px 0;
+      margin:0 0 10px 0;
       color:var(--muted);
-      font-size:14px;
+      font-size:13px;
     }
 
     label {
@@ -88,10 +189,10 @@
     input[type="tel"],
     input[type="password"] {
       width:100%;
-      padding:11px 12px;
+      padding:7px 8px;
       border:1px solid #e6eef6;
-      border-radius:10px;
-      font-size:14px;
+      border-radius:6px;
+      font-size:13px;
       background:#fbfdff;
       box-sizing:border-box;
     }
@@ -106,8 +207,8 @@
     .grid-2 {
       display:grid;
       grid-template-columns: 1fr 1fr;
-      column-gap:20px; /* increased gap */
-      row-gap:14px;
+      column-gap:8px; /* уменьшен gap */
+      row-gap:6px;
       align-items:start;
     }
 
@@ -124,8 +225,8 @@
     .optional { font-size:13px; color:var(--muted); font-weight:500; }
 
     .strength-wrapper {
-      margin-top:8px;
-      height:8px;
+      margin-top:6px;
+      height:6px;
       background:#eef2f6;
       border-radius:6px;
       overflow:hidden;
@@ -144,29 +245,29 @@
 
     .checkbox {
       display:flex;
-      gap:10px;
+      gap:8px;
       align-items:flex-start;
-      margin-top:16px;
-      font-size:14px;
+      margin-top:10px;
+      font-size:13px;
       color:#1f2937;
-      line-height:1.4;
+      line-height:1.3;
     }
     .checkbox input { transform:scale(1.14); margin-top:3px; }
 
     .btn {
       display:inline-block;
       width:100%;
-      margin-top:20px;
+      margin-top:8px;
       background:var(--blue);
       color:#fff;
-      padding:12px 14px;
-      border-radius:10px;
+      padding:9px 10px;
+      border-radius:7px;
       text-align:center;
       font-weight:700;
-      font-size:15px;
+      font-size:13px;
       border:none;
       cursor:pointer;
-      box-shadow:0 8px 20px rgba(11,98,200,0.08);
+      box-shadow:0 5px 12px rgba(11,98,200,0.08);
     }
     .btn:active { transform:translateY(1px); }
 
@@ -206,7 +307,44 @@
     <button class="lang-btn" data-lang="en">EN</button>
   </div>
 
-  <main class="form-wrapper" role="main" aria-labelledby="reg-title">
+  <header aria-label="Главное меню">
+    <div class="header-inner">
+      <a href="#home" style="display:flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none;color:inherit">
+        <div class="logo">A</div>
+        <div>
+          <div style="font-weight:700;font-size:15px;white-space:nowrap">Akelius Казахстан</div>
+          <div class="small" style="font-size:11px;white-space:nowrap">Языковое образование для школ</div>
+        </div>
+      </a>
+
+      <button class="menu-toggle" aria-label="Меню" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="mainNav">
+        <a href="#about">О проекте</a>
+        <a href="#news">Новости и события</a>
+        <a href="#resources">Ресурсы</a>
+        <a href="#results">Достижения</a>
+        <a href="#support">Поддержка</a>
+      </nav>
+
+      <nav class="lang" aria-label="Выбор языка">
+        <a href="#login" class="btn-login">Вход</a>
+        <span style="color:#d0d7de;margin:0 4px">|</span>
+        <button type="button" data-lang="ru" class="active">RU</button>
+        <button type="button" data-lang="kk">KZ</button>
+        <button type="button" data-lang="en">EN</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="layout-container">
+    <!-- Right side - Form (left-side image removed) -->
+    <div class="right-side">
+      <main class="form-wrapper" role="main" aria-labelledby="reg-title">
     <h2 id="reg-title">Создайте учетную запись</h2>
     <div class="subtitle">Для доступа к материалам Akelius</div>
 
@@ -223,13 +361,13 @@
         </div>
       </div>
 
-      <label for="email" style="margin-top:14px">Электронный адрес* <span class="optional"></span></label>
+      <label for="email" style="margin-top:8px">Электронный адрес* <span class="optional"></span></label>
       <input id="email" name="email" type="email" placeholder="example@mail.com" required>
 
-      <label for="phone" style="margin-top:14px">Номер телефона*</label>
+      <label for="phone" style="margin-top:8px">Номер телефона*</label>
       <input id="phone" name="phone" type="tel" placeholder="+7 707 123 4567" required>
 
-      <label for="password" style="margin-top:14px">Создайте пароль* <span class="note">Пароль должен содержать не менее 8 символов включая цифры, прописные и строчные буквы</span></label>
+      <label for="password" style="margin-top:8px">Создайте пароль* <span class="note">Пароль должен содержать не менее 8 символов включая цифры, прописные и строчные буквы</span></label>
       <input id="password" name="password" type="password" placeholder="Пароль" required>
 
       <div class="strength-wrapper" aria-hidden="false">
@@ -237,7 +375,7 @@
       </div>
       <div id="strengthText" class="strength-text" aria-live="polite"></div>
 
-      <label for="password2" style="margin-top:12px">Подтвердите ваш пароль*</label>
+      <label for="password2" style="margin-top:8px">Подтвердите ваш пароль*</label>
       <input id="password2" name="password2" type="password" placeholder="Повторите пароль" required>
 
       <div class="checkbox">
@@ -254,7 +392,9 @@
 
       <div class="bottom">Уже есть аккаунт? <a href="/login">Войти</a></div>
     </form>
-  </main>
+      </main>
+    </div>
+  </div>
 
 <script>
   // Language switch persisted
@@ -328,6 +468,51 @@
   document.getElementById('googleAuth').addEventListener('click', () => {
     alert('Запустить OAuth2 Google — заглушка. Реализуйте бэкенд-рут /auth/google/');
   });
+</script>
+
+<script>
+  // Mobile menu toggle (from main site)
+  const menuToggle = document.getElementById('menuToggle');
+  const mainNav = document.getElementById('mainNav');
+
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menuToggle.classList.toggle('active');
+      mainNav.classList.toggle('active');
+    });
+
+    // Close nav when clicking a link
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      }
+    });
+  }
+</script>
+
+<script>
+  // Language buttons behavior (match akelius_site_with.html)
+  const langButtons = document.querySelectorAll('.lang button');
+  if(langButtons.length){
+    const savedLang = localStorage.getItem('site_lang') || 'ru';
+    function setActive(code){
+      langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === code));
+      localStorage.setItem('site_lang', code);
+      document.documentElement.lang = (code === 'kk') ? 'kk' : code;
+    }
+    langButtons.forEach(b => b.addEventListener('click', (e)=> setActive(b.dataset.lang)));
+    setActive(savedLang);
+  }
 </script>
 
 </body>
