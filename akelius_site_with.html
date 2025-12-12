@@ -771,8 +771,8 @@ footer{background:linear-gradient(135deg,#2d3748 0%,#1a202c 100%);color:#e2e8f0;
       // Добавление минималистичных тайлов (только границы, без лишних деталей)
       // Используем CartoDB Positron - светлая минималистичная карта
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap contributors © CARTO',
-        maxZoom: 19,
+        attribution: '',
+        maxZoom: 29,
         subdomains: 'abcd'
       }).addTo(map2);
 
@@ -800,7 +800,7 @@ footer{background:linear-gradient(135deg,#2d3748 0%,#1a202c 100%);color:#e2e8f0;
                 style: {
                   color: '#0052d4',
                   weight: 3,
-                  fillColor: '#0066ff',
+                  fillColor: '#00A3E0',
                   fillOpacity: 0.5,
                   opacity: 0.8
                 }
@@ -822,7 +822,7 @@ footer{background:linear-gradient(135deg,#2d3748 0%,#1a202c 100%);color:#e2e8f0;
                   style: {
                     color: '#0052d4',
                     weight: 3,
-                    fillColor: '#0066ff',
+                    fillColor: '#00A3E0',
                     fillOpacity: 0.5,
                     opacity: 0.8
                   }
@@ -847,14 +847,14 @@ footer{background:linear-gradient(135deg,#2d3748 0%,#1a202c 100%);color:#e2e8f0;
                     
                     if (kazakhstan) {
                       const layer = L.geoJSON(kazakhstan, {
-                        style: {
-                          color: '#0052d4',
-                          weight: 3,
-                          fillColor: '#0066ff',
-                          fillOpacity: 0.5,
-                          opacity: 0.8
-                        }
-                      }).addTo(map);
+                          style: {
+                            color: '#0052d4',
+                            weight: 3,
+                            fillColor: '#00A3E0',
+                            fillOpacity: 0.5,
+                            opacity: 0.8
+                          }
+                        }).addTo(map);
                       map.fitBounds(layer.getBounds(), { padding: [8, 8] });
                       return true;
                     }
@@ -874,7 +874,7 @@ footer{background:linear-gradient(135deg,#2d3748 0%,#1a202c 100%);color:#e2e8f0;
                     const layer = L.polygon(simplifiedBorder, {
                       color: '#0052d4',
                       weight: 3,
-                      fillColor: '#0066ff',
+                      fillColor: '#00A3E0',
                       fillOpacity: 0.5,
                       opacity: 0.8
                     }).addTo(map);
@@ -899,15 +899,16 @@ footer{background:linear-gradient(135deg,#2d3748 0%,#1a202c 100%);color:#e2e8f0;
 
       // Создание кастомных иконок-кружков
       const createCircleIcon = (cityName) => {
+        // Less-bold, slightly smaller label so boxes overlap less
         return L.divIcon({
           className: 'custom-circle-marker',
-          html: `<div style="position:relative;text-align:center;">
-                   <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-weight:600;color:#ffb300;text-shadow:1px 1px 2px rgba(255,255,255,0.9), -1px -1px 2px rgba(255,255,255,0.9);background:rgba(255,255,255,0.7);padding:2px 4px;border-radius:3px;">${cityName}</div>
-                   <div style="width:16px;height:16px;border-radius:50%;background:#ffb300;border:2px solid #ffffff;box-shadow:0 2px 4px rgba(0,0,0,0.3);position:relative;margin:0 auto;margin-top:4px;"></div>
+          html: `<div style="position:relative;text-align:center;font-family:Inter, system-ui, -apple-system, Arial, sans-serif;">
+                   <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:12px;font-weight:600;color:#002b3a;background:rgba(255,255,255,0.95);padding:3px 6px;border-radius:5px;box-shadow:0 2px 6px rgba(0,0,0,0.08);">${cityName}</div>
+                   <div style="width:10px;height:10px;border-radius:50%;background:#ffb300;border:2px solid #ffffff;box-shadow:0 1px 3px rgba(0,0,0,0.2);position:relative;margin:0 auto;margin-top:4px;"></div>
                  </div>`,
-          iconSize: [60, 30],
-          iconAnchor: [30, 20],
-          popupAnchor: [0, -20]
+          iconSize: [70, 36],
+          iconAnchor: [35, 18],
+          popupAnchor: [0, -18]
         });
       };
 
